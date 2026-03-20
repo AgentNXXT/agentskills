@@ -11,7 +11,7 @@ echo "=== NocoBuilder Rebrand Script ==="
 echo "Rebranding SimStudio → NocoBuilder (powered by AgentNXXT)"
 
 # 1. Bulk text replacements (order matters — most specific first)
-echo "[1/8] Replacing simstudioai, SimStudio, sim-studio, simstudio..."
+echo "[1/9] Replacing simstudioai, SimStudio, sim-studio, simstudio..."
 find . -type f \( -name "*.json" -o -name "*.ts" -o -name "*.tsx" -o -name "*.js" -o -name "*.jsx" -o -name "*.py" -o -name "*.toml" -o -name "*.yaml" -o -name "*.yml" -o -name "*.md" -o -name "*.mdx" -o -name "*.sh" -o -name "*.tpl" -o -name "*.xml" -o -name "*.txt" -o -name "*.cfg" -o -name "*.ini" -o -name "*.env*" -o -name "Dockerfile*" -o -name "LICENSE*" -o -name "NOTICE*" -o -name "CONTRIBUTING*" \) \
   ! -path "./.git/*" ! -path "*/node_modules/*" ! -path "*/bun.lock" ! -path "*/.next/*" \
   -exec grep -lI "simstudio\|SimStudio\|sim-studio\|simstudioai\|Sim Studio" {} \; 2>/dev/null | \
@@ -26,7 +26,7 @@ find . -type f \( -name "*.json" -o -name "*.ts" -o -name "*.tsx" -o -name "*.js
   -e 's|simstudio|nocobuilder|g'
 
 # 2. Replace sim.ai domain
-echo "[2/8] Replacing sim.ai → nocobuilder.cloud..."
+echo "[2/9] Replacing sim.ai → nocobuilder.cloud..."
 find . -type f \( -name "*.ts" -o -name "*.tsx" -o -name "*.md" -o -name "*.mdx" -o -name "*.json" -o -name "*.yaml" -o -name "*.yml" -o -name "*.py" -o -name "*.toml" -o -name "*.sh" -o -name "*.xml" -o -name "*.txt" \) \
   ! -path "./.git/*" ! -path "*/node_modules/*" \
   -exec grep -lI "sim\.ai" {} \; 2>/dev/null | \
@@ -36,28 +36,28 @@ find . -type f \( -name "*.ts" -o -name "*.tsx" -o -name "*.md" -o -name "*.mdx"
   -e 's|http://sim\.ai|http://nocobuilder.cloud|g' \
   -e 's|sim\.ai|nocobuilder.cloud|g'
 
-# 3. Replace apps/sim path references
-echo "[3/8] Replacing apps/sim → apps/nocobuilder..."
-find . -type f \( -name "*.json" -o -name "*.ts" -o -name "*.tsx" -o -name "*.yaml" -o -name "*.yml" -o -name "*.md" -o -name "*.sh" -o -name "*.toml" \) \
+# 3. Replace apps/sim path references (including Dockerfiles)
+echo "[3/9] Replacing apps/sim → apps/nocobuilder..."
+find . -type f \( -name "*.json" -o -name "*.ts" -o -name "*.tsx" -o -name "*.yaml" -o -name "*.yml" -o -name "*.md" -o -name "*.sh" -o -name "*.toml" -o -name "Dockerfile*" -o -name "*.Dockerfile" \) \
   ! -path "./.git/*" ! -path "*/node_modules/*" \
   -exec grep -lI "apps/sim" {} \; 2>/dev/null | \
   xargs sed -i'' -e 's|apps/sim|apps/nocobuilder|g'
 
 # 4. Replace helm/sim path references
-echo "[4/8] Replacing helm/sim → helm/nocobuilder..."
+echo "[4/9] Replacing helm/sim → helm/nocobuilder..."
 find . -type f \( -name "*.json" -o -name "*.ts" -o -name "*.tsx" -o -name "*.yaml" -o -name "*.yml" -o -name "*.md" -o -name "*.sh" -o -name "*.toml" \) \
   ! -path "./.git/*" ! -path "*/node_modules/*" \
   -exec grep -lI "helm/sim" {} \; 2>/dev/null | \
   xargs sed -i'' -e 's|helm/sim|helm/nocobuilder|g'
 
 # 5. Rename directories
-echo "[5/8] Renaming directories..."
+echo "[5/9] Renaming directories..."
 mv apps/sim apps/nocobuilder 2>/dev/null || true
 mv helm/sim helm/nocobuilder 2>/dev/null || true
 mv packages/python-sdk/simstudio packages/python-sdk/nocobuilder 2>/dev/null || true
 
 # 6. Rename files
-echo "[6/8] Renaming files..."
+echo "[6/9] Renaming files..."
 # Cursor rules
 for f in .cursor/rules/sim-*.mdc; do [ -f "$f" ] && mv "$f" "${f//sim-/noco-}"; done 2>/dev/null || true
 # Claude rules
@@ -70,7 +70,7 @@ mv apps/nocobuilder/app/form/\[identifier\]/components/powered-by-sim.tsx \
 mv apps/docs/components/ui/sim-logo.tsx apps/docs/components/ui/nocobuilder-logo.tsx 2>/dev/null || true
 
 # 7. Fix imports for renamed files + remaining brand refs
-echo "[7/8] Fixing imports and remaining references..."
+echo "[7/9] Fixing imports and remaining references..."
 find . -name "*.ts" -o -name "*.tsx" | grep -v ".git/" | grep -v "node_modules/" | \
   xargs grep -l "powered-by-sim" 2>/dev/null | xargs sed -i'' -e 's/powered-by-sim/powered-by-nocobuilder/g' 2>/dev/null || true
 find . -name "*.ts" -o -name "*.tsx" -o -name "*.md" -o -name "*.mdx" | grep -v ".git/" | grep -v "node_modules/" | \
@@ -110,8 +110,25 @@ find . -type f \( -name "*.ts" -o -name "*.tsx" -o -name "*.env*" \) ! -path "./
 # Internal URL ref
 sed -i'' -e 's/sim-app.default.svc/nocobuilder-app.default.svc/g' apps/nocobuilder/.env.example 2>/dev/null || true
 
-# 8. Verify
-echo "[8/8] Verifying..."
+echo "[8/9] Fixing Docker configs for Docker Hub (agentnxxt/*)..."
+# Docker: replace @sim/db in Dockerfiles
+find ./docker -name "*.Dockerfile" -exec sed -i'' -e 's|@sim/db|@nocobuilder/db|g' {} \; 2>/dev/null || true
+
+# Docker: update prod compose to use Docker Hub
+sed -i'' -e 's|ghcr.io/simstudioai/sim:|agentnxxt/nocobuilder:|g' \
+  -e 's|ghcr.io/simstudioai/realtime:|agentnxxt/nocobuilder-realtime:|g' \
+  -e 's|ghcr.io/simstudioai/migrations:|agentnxxt/nocobuilder-migrations:|g' \
+  -e 's|ghcr.io/nocobuilder/nocobuilder:|agentnxxt/nocobuilder:|g' \
+  -e 's|ghcr.io/nocobuilder/realtime:|agentnxxt/nocobuilder-realtime:|g' \
+  -e 's|ghcr.io/nocobuilder/migrations:|agentnxxt/nocobuilder-migrations:|g' \
+  docker-compose.prod.yml 2>/dev/null || true
+
+# Docker: replace SIM_AGENT in compose files
+find . -name "docker-compose*.yml" ! -path "./.git/*" \
+  -exec sed -i'' -e 's/SIM_AGENT_API_URL/NOCO_AGENT_API_URL/g' {} \; 2>/dev/null || true
+
+# 9. Verify
+echo "[9/9] Verifying..."
 COUNT=$(grep -rn "simstudio\|SimStudio\|simstudioai" --include="*.ts" --include="*.tsx" --include="*.json" --include="*.yaml" --include="*.yml" --include="*.md" --include="*.py" --include="*.toml" . 2>/dev/null | grep -v ".git/" | grep -v "node_modules/" | wc -l)
 echo "Remaining simstudio references: $COUNT"
 
