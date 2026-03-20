@@ -1,0 +1,294 @@
+diff --git a/docker-compose.local.yml b/docker-compose.local.yml
+index 02672fd..1d9bc02 100644
+--- a/docker-compose.local.yml
++++ b/docker-compose.local.yml
+@@ -20,7 +20,7 @@ services:
+       - INTERNAL_API_SECRET=${INTERNAL_API_SECRET:-dev-internal-api-secret-min-32-chars}
+       - REDIS_URL=${REDIS_URL:-}
+       - COPILOT_API_KEY=${COPILOT_API_KEY}
+-      - SIM_AGENT_API_URL=${SIM_AGENT_API_URL}
++      - NOCO_AGENT_API_URL=${NOCO_AGENT_API_URL}
+       - OLLAMA_URL=${OLLAMA_URL:-http://localhost:11434}
+       - SOCKET_SERVER_URL=${SOCKET_SERVER_URL:-http://realtime:3002}
+       - NEXT_PUBLIC_SOCKET_URL=${NEXT_PUBLIC_SOCKET_URL:-http://localhost:3002}
+@@ -97,5 +97,45 @@ services:
+       timeout: 5s
+       retries: 5
+ 
++  # ── MCP Servers ──────────────────────────────────────────────────────────────
++
++  ghost-mcp:
++    build: ./mcp-servers/ghost-mcp-server
++    restart: unless-stopped
++    environment:
++      - GHOST_URL=${GHOST_URL:-}
++      - GHOST_ADMIN_API_KEY=${GHOST_ADMIN_API_KEY:-}
++      - GHOST_CONTENT_API_KEY=${GHOST_CONTENT_API_KEY:-}
++      - GHOST_API_VERSION=${GHOST_API_VERSION:-v5.0}
++    deploy:
++      resources:
++        limits:
++          memory: 256M
++
++  hostinger-mcp:
++    build: ./mcp-servers/hostinger-mcp
++    restart: unless-stopped
++    ports:
++      - '${HOSTINGER_MCP_PORT:-8000}:8000'
++    environment:
++      - HOSTINGER_API_KEY=${HOSTINGER_API_KEY:-}
++    deploy:
++      resources:
++        limits:
++          memory: 256M
++
++  logto-mcp:
++    build: ./mcp-servers/logto-mcp-server
++    restart: unless-stopped
++    environment:
++      - LOGTO_ENDPOINT=${LOGTO_ENDPOINT:-}
++      - LOGTO_APP_ID=${LOGTO_APP_ID:-}
++      - LOGTO_APP_SECRET=${LOGTO_APP_SECRET:-}
++      - LOGTO_ACCOUNTS_TOKEN=${LOGTO_ACCOUNTS_TOKEN:-}
++    deploy:
++      resources:
++        limits:
++          memory: 256M
++
+ volumes:
+   postgres_data:
+diff --git a/docker-compose.prod.yml b/docker-compose.prod.yml
+index ffe93ba..9d7f1d3 100644
+--- a/docker-compose.prod.yml
++++ b/docker-compose.prod.yml
+@@ -1,6 +1,6 @@
+ services:
+   nocobuilder:
+-    image: ghcr.io/nocobuilder/nocobuilder:latest
++    image: agentnxxt/nocobuilder:latest
+     restart: unless-stopped
+     ports:
+       - '3000:3000'
+@@ -19,7 +19,7 @@ services:
+       - INTERNAL_API_SECRET=${INTERNAL_API_SECRET}
+       - REDIS_URL=${REDIS_URL:-}
+       - COPILOT_API_KEY=${COPILOT_API_KEY}
+-      - SIM_AGENT_API_URL=${SIM_AGENT_API_URL}
++      - NOCO_AGENT_API_URL=${NOCO_AGENT_API_URL}
+       - OLLAMA_URL=${OLLAMA_URL:-http://localhost:11434}
+       - SOCKET_SERVER_URL=${SOCKET_SERVER_URL:-http://realtime:3002}
+       - NEXT_PUBLIC_SOCKET_URL=${NEXT_PUBLIC_SOCKET_URL:-http://localhost:3002}
+@@ -38,7 +38,7 @@ services:
+       start_period: 10s
+ 
+   realtime:
+-    image: ghcr.io/nocobuilder/realtime:latest
++    image: agentnxxt/nocobuilder-realtime:latest
+     restart: unless-stopped
+     ports:
+       - '3002:3002'
+@@ -65,7 +65,7 @@ services:
+       start_period: 10s
+ 
+   migrations:
+-    image: ghcr.io/nocobuilder/migrations:latest
++    image: agentnxxt/nocobuilder-migrations:latest
+     working_dir: /app/packages/db
+     environment:
+       - DATABASE_URL=postgresql://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-postgres}@db:5432/${POSTGRES_DB:-nocobuilder}
+@@ -92,5 +92,45 @@ services:
+       timeout: 5s
+       retries: 5
+ 
++  # ── MCP Servers ──────────────────────────────────────────────────────────────
++
++  ghost-mcp:
++    image: agentnxxt/ghost-mcp-server:latest
++    restart: unless-stopped
++    environment:
++      - GHOST_URL=${GHOST_URL:-}
++      - GHOST_ADMIN_API_KEY=${GHOST_ADMIN_API_KEY:-}
++      - GHOST_CONTENT_API_KEY=${GHOST_CONTENT_API_KEY:-}
++      - GHOST_API_VERSION=${GHOST_API_VERSION:-v5.0}
++    deploy:
++      resources:
++        limits:
++          memory: 256M
++
++  hostinger-mcp:
++    image: agentnxxt/hostinger-mcp:latest
++    restart: unless-stopped
++    ports:
++      - '${HOSTINGER_MCP_PORT:-8000}:8000'
++    environment:
++      - HOSTINGER_API_KEY=${HOSTINGER_API_KEY:-}
++    deploy:
++      resources:
++        limits:
++          memory: 256M
++
++  logto-mcp:
++    image: agentnxxt/logto-mcp-server:latest
++    restart: unless-stopped
++    environment:
++      - LOGTO_ENDPOINT=${LOGTO_ENDPOINT:-}
++      - LOGTO_APP_ID=${LOGTO_APP_ID:-}
++      - LOGTO_APP_SECRET=${LOGTO_APP_SECRET:-}
++      - LOGTO_ACCOUNTS_TOKEN=${LOGTO_ACCOUNTS_TOKEN:-}
++    deploy:
++      resources:
++        limits:
++          memory: 256M
++
+ volumes:
+   postgres_data:
+diff --git a/docker/app.Dockerfile b/docker/app.Dockerfile
+index 5f7c651..c0180d7 100644
+--- a/docker/app.Dockerfile
++++ b/docker/app.Dockerfile
+@@ -19,7 +19,7 @@ WORKDIR /app
+ 
+ COPY package.json bun.lock turbo.json ./
+ RUN mkdir -p apps packages/db packages/testing packages/logger packages/tsconfig
+-COPY apps/sim/package.json ./apps/sim/package.json
++COPY apps/nocobuilder/package.json ./apps/nocobuilder/package.json
+ COPY packages/db/package.json ./packages/db/package.json
+ COPY packages/testing/package.json ./packages/testing/package.json
+ COPY packages/logger/package.json ./packages/logger/package.json
+@@ -48,23 +48,23 @@ COPY --from=deps /app/node_modules ./node_modules
+ 
+ # Copy package configuration files (needed for build)
+ COPY package.json bun.lock turbo.json ./
+-COPY apps/sim/package.json ./apps/sim/package.json
++COPY apps/nocobuilder/package.json ./apps/nocobuilder/package.json
+ COPY packages/db/package.json ./packages/db/package.json
+ COPY packages/testing/package.json ./packages/testing/package.json
+ COPY packages/logger/package.json ./packages/logger/package.json
+ 
+ # Copy workspace configuration files (needed for turbo)
+-COPY apps/sim/next.config.ts ./apps/sim/next.config.ts
+-COPY apps/sim/tsconfig.json ./apps/sim/tsconfig.json
+-COPY apps/sim/tailwind.config.ts ./apps/sim/tailwind.config.ts
+-COPY apps/sim/postcss.config.mjs ./apps/sim/postcss.config.mjs
++COPY apps/nocobuilder/next.config.ts ./apps/nocobuilder/next.config.ts
++COPY apps/nocobuilder/tsconfig.json ./apps/nocobuilder/tsconfig.json
++COPY apps/nocobuilder/tailwind.config.ts ./apps/nocobuilder/tailwind.config.ts
++COPY apps/nocobuilder/postcss.config.mjs ./apps/nocobuilder/postcss.config.mjs
+ 
+ # Copy source code (changes most frequently - placed last to maximize cache hits)
+-COPY apps/sim ./apps/sim
++COPY apps/nocobuilder ./apps/nocobuilder
+ COPY packages ./packages
+ 
+ # Required for standalone nextjs build
+-WORKDIR /app/apps/sim
++WORKDIR /app/apps/nocobuilder
+ RUN --mount=type=cache,id=bun-cache,target=/root/.bun/install/cache \
+     HUSKY=0 bun install sharp --linker=hoisted
+ 
+@@ -74,7 +74,7 @@ ENV NEXT_TELEMETRY_DISABLED=1 \
+ 
+ WORKDIR /app
+ 
+-# Provide dummy database URLs during image build so server code that imports @sim/db
++# Provide dummy database URLs during image build so server code that imports @nocobuilder/db
+ # can be evaluated without crashing. Runtime environments should override these.
+ ARG DATABASE_URL="postgresql://user:pass@localhost:5432/dummy"
+ ENV DATABASE_URL=${DATABASE_URL}
+@@ -101,30 +101,30 @@ RUN groupadd -g 1001 nodejs && \
+     useradd -u 1001 -g nodejs nextjs
+ 
+ # Copy application artifacts from builder
+-COPY --from=builder --chown=nextjs:nodejs /app/apps/sim/public ./apps/sim/public
+-COPY --from=builder --chown=nextjs:nodejs /app/apps/sim/.next/standalone ./
+-COPY --from=builder --chown=nextjs:nodejs /app/apps/sim/.next/static ./apps/sim/.next/static
++COPY --from=builder --chown=nextjs:nodejs /app/apps/nocobuilder/public ./apps/nocobuilder/public
++COPY --from=builder --chown=nextjs:nodejs /app/apps/nocobuilder/.next/standalone ./
++COPY --from=builder --chown=nextjs:nodejs /app/apps/nocobuilder/.next/static ./apps/nocobuilder/.next/static
+ 
+ # Copy isolated-vm native module (compiled for Node.js in deps stage)
+ COPY --from=deps --chown=nextjs:nodejs /app/node_modules/isolated-vm ./node_modules/isolated-vm
+ 
+ # Copy the isolated-vm worker script
+-COPY --from=builder --chown=nextjs:nodejs /app/apps/sim/lib/execution/isolated-vm-worker.cjs ./apps/sim/lib/execution/isolated-vm-worker.cjs
++COPY --from=builder --chown=nextjs:nodejs /app/apps/nocobuilder/lib/execution/isolated-vm-worker.cjs ./apps/nocobuilder/lib/execution/isolated-vm-worker.cjs
+ 
+ # Guardrails setup with pip caching
+-COPY --from=builder --chown=nextjs:nodejs /app/apps/sim/lib/guardrails/requirements.txt ./apps/sim/lib/guardrails/requirements.txt
+-COPY --from=builder --chown=nextjs:nodejs /app/apps/sim/lib/guardrails/validate_pii.py ./apps/sim/lib/guardrails/validate_pii.py
++COPY --from=builder --chown=nextjs:nodejs /app/apps/nocobuilder/lib/guardrails/requirements.txt ./apps/nocobuilder/lib/guardrails/requirements.txt
++COPY --from=builder --chown=nextjs:nodejs /app/apps/nocobuilder/lib/guardrails/validate_pii.py ./apps/nocobuilder/lib/guardrails/validate_pii.py
+ 
+ # Install Python dependencies with pip cache mount for faster rebuilds
+ RUN --mount=type=cache,target=/root/.cache/pip \
+-    python3 -m venv ./apps/sim/lib/guardrails/venv && \
+-    ./apps/sim/lib/guardrails/venv/bin/pip install --upgrade pip && \
+-    ./apps/sim/lib/guardrails/venv/bin/pip install -r ./apps/sim/lib/guardrails/requirements.txt && \
+-    chown -R nextjs:nodejs /app/apps/sim/lib/guardrails
++    python3 -m venv ./apps/nocobuilder/lib/guardrails/venv && \
++    ./apps/nocobuilder/lib/guardrails/venv/bin/pip install --upgrade pip && \
++    ./apps/nocobuilder/lib/guardrails/venv/bin/pip install -r ./apps/nocobuilder/lib/guardrails/requirements.txt && \
++    chown -R nextjs:nodejs /app/apps/nocobuilder/lib/guardrails
+ 
+ # Create .next/cache directory with correct ownership
+-RUN mkdir -p apps/sim/.next/cache && \
+-    chown -R nextjs:nodejs apps/sim/.next/cache
++RUN mkdir -p apps/nocobuilder/.next/cache && \
++    chown -R nextjs:nodejs apps/nocobuilder/.next/cache
+ 
+ # Switch to non-root user
+ USER nextjs
+@@ -133,4 +133,4 @@ EXPOSE 3000
+ ENV PORT=3000 \
+     HOSTNAME="0.0.0.0"
+ 
+-CMD ["bun", "apps/sim/server.js"]
+\ No newline at end of file
++CMD ["bun", "apps/nocobuilder/server.js"]
+\ No newline at end of file
+diff --git a/docker/realtime.Dockerfile b/docker/realtime.Dockerfile
+index 9ee8df0..1aaf9ed 100644
+--- a/docker/realtime.Dockerfile
++++ b/docker/realtime.Dockerfile
+@@ -12,7 +12,7 @@ WORKDIR /app
+ 
+ COPY package.json bun.lock turbo.json ./
+ RUN mkdir -p apps packages/db packages/testing packages/logger packages/tsconfig
+-COPY apps/sim/package.json ./apps/sim/package.json
++COPY apps/nocobuilder/package.json ./apps/nocobuilder/package.json
+ COPY packages/db/package.json ./packages/db/package.json
+ COPY packages/testing/package.json ./packages/testing/package.json
+ COPY packages/logger/package.json ./packages/logger/package.json
+@@ -34,13 +34,13 @@ COPY --from=deps /app/node_modules ./node_modules
+ 
+ # Copy package configuration files (needed for build)
+ COPY package.json bun.lock turbo.json ./
+-COPY apps/sim/package.json ./apps/sim/package.json
++COPY apps/nocobuilder/package.json ./apps/nocobuilder/package.json
+ COPY packages/db/package.json ./packages/db/package.json
+ COPY packages/testing/package.json ./packages/testing/package.json
+ COPY packages/logger/package.json ./packages/logger/package.json
+ 
+ # Copy source code (changes most frequently - placed last to maximize cache hits)
+-COPY apps/sim ./apps/sim
++COPY apps/nocobuilder ./apps/nocobuilder
+ COPY packages ./packages
+ 
+ # ========================================
+@@ -68,7 +68,7 @@ COPY --from=builder --chown=nextjs:nodejs /app/packages/db ./packages/db
+ COPY --from=builder --chown=nextjs:nodejs /app/packages/logger ./packages/logger
+ 
+ # Copy sim app (changes most frequently - placed last)
+-COPY --from=builder --chown=nextjs:nodejs /app/apps/sim ./apps/sim
++COPY --from=builder --chown=nextjs:nodejs /app/apps/nocobuilder ./apps/nocobuilder
+ 
+ # Switch to non-root user
+ USER nextjs
+@@ -80,4 +80,4 @@ ENV PORT=3002 \
+     HOSTNAME="0.0.0.0"
+ 
+ # Run the socket server directly
+-CMD ["bun", "apps/sim/socket/index.ts"]
+\ No newline at end of file
++CMD ["bun", "apps/nocobuilder/socket/index.ts"]
+\ No newline at end of file
