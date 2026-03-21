@@ -882,23 +882,29 @@ Determine each skill's proficiency level using the evidence hierarchy below. Use
 
 ### Proof Source Labels
 
-Use these standardized labels in the Proof column:
+Every proof in the Proof column MUST include a **credibility tier prefix** `[S]` through `[G]`
+as defined in `skills-frameworks/SKILL.md` Section 15 (Verifier Credibility Hierarchy).
 
-| Source type | Label format |
-|---|---|
-| Verifiable Credential (cryptographically verified) | **Verified by [Issuer Name]** ([Credential Name], [Date]) |
-| Verifiable Credential (issued, not verified) | **Issued by [Issuer Name]** ([Credential Name], [Date]) |
-| Platform certification (Credly, cloud certs) | **Verified by [Platform]** ([Cert Name], [Date]) |
-| GitHub evidence | GitHub: [X] repos, [Y] commits / stars |
-| Stack Overflow evidence | Stack Overflow: top [X]% [tag] score |
-| Docker Hub evidence | Docker Hub: [X] images, [Y] pulls |
-| npm / PyPI evidence | npm/PyPI: [X] packages, [Y] downloads/week |
-| Published writing | [Platform]: [X] articles, [Y] reactions/claps |
-| Kaggle evidence | Kaggle: [X] competitions, [medal/rank] |
-| Role-inferred | Inferred from role: "[Title]" at [Company] ([Duration]) |
-| Document-inferred | Inferred from authored: "[Document Title]" |
-| Chat-inferred | Inferred from [Platform] communications |
-| Self-reported | Self-reported (unverified) |
+**Key rule: Publicly verifiable information = Tier [S] = no verification needed.**
+If anyone can confirm the claim by visiting a public URL, it is self-evident truth.
+
+| Tier | Source type | Label format |
+|---|---|---|
+| **[S]** | Public record (GitHub, patents, papers, packages, SO) | `[S] GitHub: [X] repos, [Y] commits` |
+| **[S]** | Published writing (public articles, books) | `[S] [Platform]: [X] articles, [Y] reactions` |
+| **[S]** | Granted patents | `[S] Patent US[Number]` |
+| **[A]** | Verified by accredited institution (university, govt) | `[A] Verified by [Institution]` |
+| **[B]** | Verified by employer (HR, manager VC) | `[B] Verified by [Company] HR ([Credential])` |
+| **[C]** | Certified by industry body (AWS, PMI, CNCF, Cisco) | `[C] Certified by [Body] ([Cert Name], [Date])` |
+| **[C]** | Verifiable Credential (cryptographically verified) | `[C] VC verified by [Issuer] ([Credential], [Date])` |
+| **[C]** | Platform certification (Credly, cloud certs) | `[C] Credly badge: [Cert Name] ([Date])` |
+| **[D]** | Assessment platform score | `[D] Assessed by [Platform] (Score: [X])` |
+| **[E]** | Named peer endorsement | `[E] Endorsed by [Name, Title at Company]` |
+| **[F]** | Community signal | `[F] Stack Overflow: top [X]% [tag]; GitHub: [Y] stars` |
+| **[F]** | Chat/email inferred (anonymized) | `[F] Evidenced from [X] anonymized [platform] interactions` |
+| **[F]** | Role-inferred | `[F] Inferred from role: "[Title]" at [Company] ([Duration])` |
+| **[F]** | Document-inferred | `[F] Inferred from authored: "[Document Title]" |
+| **[G]** | Self-reported | `[G] Self-reported (unverified)` |
 
 ### Multi-source Skill Aggregation
 

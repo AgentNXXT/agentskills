@@ -509,6 +509,93 @@ These platforms reach employers and job seekers directly.
 | **Credly / Acclaim** | Map Credly badges to framework codes and levels | Credly is the leading digital credentialing platform |
 | **Coursera / edX / Udacity** | Map course completions to framework skill codes and levels | Learning platforms can issue framework-aligned credentials |
 
+### Tier 7 — Top Educational Institutions (Academic Review Panel)
+
+Engage top global universities and research institutes to **review, validate, and endorse**
+the framework. Academic endorsement provides intellectual credibility and research rigor.
+
+| Institution | Department / Lab | Why | Role |
+|---|---|---|---|
+| **MIT** (CSAIL / Media Lab / Sloan) | US | Leading in AI, skills tech, future of work research | Framework review + CS/AI skill taxonomy validation |
+| **Harvard** (HBS / Kennedy School / SEAS) | US | Leadership in management, public policy, and education research | Business/management skill framework review |
+| **Stanford** (HAI / GSB / CS) | US | AI ethics, human-centered AI, entrepreneurship | AI/ML skill taxonomy + ethics framework review |
+| **Carnegie Mellon** (SCS / Heinz) | US | CS education research, skills assessment, HCI | Technical skills assessment methodology review |
+| **IIT Bombay** (CS / IDC / SOM) | India | India's premier engineering institute; bridges India's massive talent ecosystem | Engineering + design skill framework review; India regional validation |
+| **IIT Delhi** (CS / AI) | India | Strong AI/ML research; policy influence in India | AI skill taxonomy review; Indian IT workforce alignment |
+| **IIT Madras** (CS / Data Science) | India | Pioneer in online degrees (BS Data Science); NPTEL leader | Data science framework review; online credential validation |
+| **IIM Ahmedabad** | India | Top management research; shapes Indian business education | Management/leadership skill framework review |
+| **IIM Bangalore** | India | Analytics and IT management focus; edX partnership | Business analytics framework review |
+| **IIM Calcutta** | India | Finance and economics research leadership | Finance skill framework review |
+| **ISB** (Indian School of Business) | India | Bridges global and Indian management practice | Cross-cultural management skills review |
+| **University of Oxford** (CS / Said / Blavatnik) | UK | Policy, AI ethics, governance research | Public policy + ethics review |
+| **University of Cambridge** (CS / Judge) | UK | Engineering, business, interdisciplinary research | Cross-domain framework validation |
+| **LSE** (London School of Economics) | UK | Economics, social sciences, labor markets | Economics/social science framework review |
+| **ETH Zurich** | Switzerland | Engineering, CS, precision sciences | Engineering skill taxonomy review |
+| **NUS** (National University of Singapore) | Singapore | Asian skills ecosystem, future workforce research | Asia-Pacific regional validation |
+| **Tsinghua University** | China | Engineering, AI, China's tech ecosystem | China regional validation |
+| **University of Toronto** (Vector Institute) | Canada | Deep learning research | ML/AI skill taxonomy review |
+| **INSEAD** | France/Singapore | International business, cross-cultural management | Global management skills review |
+| **Max Planck Institutes** | Germany | ML, cognitive science, fundamental research | Research methodology review |
+
+### Tier 8 — Top Companies (Industry Review Panel)
+
+Engage leading global companies to **review and validate** the framework against real-world
+hiring practices, internal competency models, and workforce planning needs.
+
+#### Technology
+| Company | Why | Review focus |
+|---|---|---|
+| **Google** | Defines hiring bars for engineering globally; internal skills framework (L3–L11) | Engineering levels, AI/ML skills, SWE competencies |
+| **Microsoft** | Career framework used by 200K+ employees; Azure certifications ecosystem | Engineering career ladder validation; certification alignment |
+| **Amazon / AWS** | Leadership Principles + technical bar; AWS certification ecosystem | Leadership competency validation; cloud skills taxonomy |
+| **Apple** | Hardware + software + design integration; secretive but influential | Design + engineering cross-domain skills |
+| **Meta** | Engineering levels, AI research, VR/AR skills | AI/ML skills, engineering levels validation |
+| **Netflix** | Culture-driven competency model; no formal levels | Behavioral/culture-fit skill validation |
+| **Salesforce** | Trailhead credentials ecosystem; admin/developer certification paths | CRM/SaaS skill taxonomy; gamified credential validation |
+| **NVIDIA** | GPU/AI infrastructure; defines AI hardware skills | AI infrastructure skill taxonomy |
+| **Infosys** | 300K+ employees; large-scale skills transformation programs | IT services skill framework; India workforce validation |
+| **TCS** (Tata Consultancy Services) | 600K+ employees; internal competency frameworks | Large-scale IT workforce skills validation |
+| **Wipro** | Digital transformation skills programs | IT consulting skill taxonomy |
+| **HCLTech** | Engineering and IT services; Mode 1/2/3 framework | Engineering services skill validation |
+
+#### Finance
+| Company | Why | Review focus |
+|---|---|---|
+| **Goldman Sachs** | Defines finance hiring standards globally | Finance/quant skill taxonomy |
+| **JPMorgan Chase** | Massive tech + finance workforce; internal academy | Fintech + banking skill framework |
+| **BlackRock** | Investment management + Aladdin platform | Investment/risk management skills |
+| **HDFC Bank / ICICI Bank** | India's leading private banks; large talent pools | Banking/finance skills; India regional validation |
+
+#### Consulting
+| Company | Why | Review focus |
+|---|---|---|
+| **McKinsey & Company** | Defines consulting competency standards | Strategy/consulting skill taxonomy |
+| **BCG** (Boston Consulting Group) | Strategy + digital transformation | Digital transformation skills |
+| **Deloitte** | Audit, consulting, tech advisory; internal competency models | Cross-functional professional skills |
+| **Accenture** | 700K+ employees; massive skills transformation investment | IT/consulting skill framework at scale |
+
+#### Design & Creative
+| Company | Why | Review focus |
+|---|---|---|
+| **IDEO** | Defines design thinking methodology globally | Design/innovation skill taxonomy |
+| **Figma / Adobe** | Design tools that shape the profession | Design tool proficiency standards |
+| **Frog Design** | Strategic design consulting | Design strategy skills |
+
+#### Healthcare & Pharma
+| Company | Why | Review focus |
+|---|---|---|
+| **Johnson & Johnson** | Global healthcare leader; R&D competency models | Healthcare/pharma skill taxonomy |
+| **Pfizer** | Biotech/pharma R&D and commercialization | Biotech skill framework |
+| **Apollo Hospitals / Fortis** | India's largest hospital networks | Healthcare skills; India regional validation |
+
+#### Manufacturing & Engineering
+| Company | Why | Review focus |
+|---|---|---|
+| **Siemens** | Industry 4.0 skills pioneer; Siemens Xcelerator | Industrial/manufacturing skill taxonomy |
+| **Bosch** | Engineering + IoT; strong competency frameworks | Engineering skill validation |
+| **Tata Group** | India's largest conglomerate; multi-industry | Cross-industry skills; India regional validation |
+| **Reliance Industries** | India's largest company; digital + energy + retail | Diversified skill taxonomy; India validation |
+
 ### Recommended Adoption Sequence
 
 1. **Immediate (Month 1–2):**
@@ -517,6 +604,8 @@ These platforms reach employers and job seekers directly.
    - Submit **arXiv preprint** (self-publish, live in 24 hours, no review gate)
    - Submit **IEEE Access paper** (open-access journal, fast peer review ~4–8 weeks)
    - Reach out to SFIA Foundation for partnership discussion
+   - **Invite 3–5 academic reviewers** from Tier 7 institutions (start with MIT, IIT Bombay,
+     Oxford, IIM Ahmedabad) to review the preprint and provide feedback
 
 2. **Short-term (Month 3–6):**
    - Submit Schema.org extension proposal
@@ -525,6 +614,11 @@ These platforms reach employers and job seekers directly.
    - Present at 1–2 industry conferences (EC-TEL, SkillsX)
    - Engage WEF Future of Jobs initiative
    - Submit to **ACM Computing Surveys** (longer review cycle but high-impact)
+   - **Form Academic Advisory Board** from Tier 7 institutions (target 10–15 faculty members
+     across CS, business, design, healthcare, social sciences)
+   - **Engage 5–10 companies** from Tier 8 for industry validation (start with Google,
+     Microsoft, Infosys, McKinsey, Deloitte — they have public competency frameworks to
+     cross-reference)
 
 3. **Medium-term (Month 6–12):**
    - Submit **CEN Workshop Agreement** proposal (fast-track European norm)
@@ -533,6 +627,9 @@ These platforms reach employers and job seekers directly.
      publication which is already done in Step 1)
    - Engage professional associations (SFIA, PMI, ISACA) for endorsement
    - Partner with 1–2 credentialing platforms (Credly, Open Badges)
+   - **Publish joint papers** with academic review board members
+   - **Pilot with 2–3 companies** from Tier 8 — validate framework against their
+     internal competency models and hiring rubrics
 
 4. **Long-term (Year 1–3):**
    - **IEEE-SA standard ratification** (working group ballots, public comment, revision)
@@ -540,6 +637,8 @@ These platforms reach employers and job seekers directly.
    - Government submissions (EU, US DOL, UK DfE, Singapore, India, Australia)
    - Enterprise HRIS integrations (Workday, SAP)
    - Job board integrations (LinkedIn, Indeed)
+   - **Establish permanent Academic + Industry Review Council** with rotating membership
+     from Tier 7 and Tier 8 organizations
 
 **Note on IEEE — two distinct tracks:**
 - **IEEE Access (journal)** = publish a peer-reviewed paper. Fast (~2 months). Done in Step 1.
@@ -549,6 +648,359 @@ These platforms reach employers and job seekers directly.
 
 Both are IEEE, but journal publication is academic visibility while standards adoption is
 industry-binding authority.
+
+---
+
+## Section 15 — Verifier Credibility Hierarchy
+
+Skills can be verified by **anyone** — but the credibility of the verification depends on
+**who** verifies it. This section defines the trust hierarchy for skill verification sources.
+
+### The Fundamental Rule: Publicly Verifiable = No Verification Needed
+
+**Publicly verifiable information holds the utmost authority and requires NO third-party
+verification.** If anyone can independently confirm a claim by visiting a public URL or
+querying a public database, the claim is self-evident.
+
+| Publicly verifiable source | What it proves | Why no verification needed |
+|---|---|---|
+| **Public GitHub repos** | Code authored, languages used, contribution history | Anyone can view the code, commits, and authorship |
+| **Published papers** (Google Scholar, arXiv, IEEE Xplore, PubMed) | Research authored, expertise demonstrated | Papers are publicly indexed with author attribution |
+| **Granted patents** (Google Patents, USPTO, EPO) | Inventions, technical innovation | Patent databases are public records |
+| **Published npm / PyPI packages** | Open-source authorship, package usage stats | Package registries are public with download counts |
+| **Stack Overflow profile** | Community reputation, expertise areas | Reputation scores and answers are publicly visible |
+| **Docker Hub images** | Container authorship, pull counts | Public registry with usage stats |
+| **Published articles** (Dev.to, Medium, personal blog) | Writing ability, domain knowledge | Articles are publicly accessible |
+| **Credly badges (public profile)** | Certification status | Credly profiles are publicly verifiable |
+| **Open-source contributions** (merged PRs, issues) | Collaboration, technical skill | Git history is immutable and public |
+| **Public speaking** (YouTube, conference sites) | Presentation skills, thought leadership | Videos and speaker listings are public |
+| **Published books** (ISBN records) | Authorship, expertise | ISBN databases are public |
+
+**Rule:** When a skill claim is backed by publicly verifiable evidence, mark it in the
+resume Proof column as the direct source (e.g., "GitHub: 15 repos") — NOT as "Verified by"
+anyone. The public record IS the verification.
+
+### Verifier Credibility Tiers
+
+For skills that are NOT publicly verifiable (e.g., internal project work, team leadership,
+soft skills, proprietary domain expertise), the credibility of verification depends on the
+verifier. Anyone can verify a skill, but the weight differs:
+
+| Tier | Verifier type | Credibility | Example | Resume label |
+|---|---|---|---|---|
+| **S — Self-Evident** | Public record (no verifier needed) | Absolute | GitHub repo, published paper, granted patent | `GitHub: 15 repos` / `Patent US12345` |
+| **A — Institutional** | Accredited university, government body, standards organization | Highest | MIT degree, CFA Institute certification, government license | `Verified by [Institution]` |
+| **B — Employer** | Current or former employer (HR department, manager with authority) | Very High | Employment VC from Acme Corp HR, signed reference letter | `Verified by [Company] HR` |
+| **C — Industry Certification Body** | Recognized certification authority (not the employer) | High | AWS (Amazon), CNCF, PMI, Cisco, Microsoft | `Certified by [Body]` |
+| **D — Assessment Platform** | Independent testing/assessment service | Medium-High | HackerRank, Pluralsight IQ, Codility, StrengthsFinder | `Assessed by [Platform] (Score: X)` |
+| **E — Professional Peer** | Named colleague, manager, or client with verifiable identity | Medium | LinkedIn recommendation, signed peer endorsement, VC from named individual | `Endorsed by [Name, Title at Company]` |
+| **F — Community** | Aggregated community signal (not a single named individual) | Medium-Low | Stack Overflow reputation, GitHub stars, social proof at scale | `Community: [metric]` |
+| **G — Self-Reported** | The individual themselves (no external verification) | Lowest | User's own description of skills and experience | `Self-reported (unverified)` |
+
+### Credibility Combinatorics
+
+Multiple lower-tier verifications can strengthen credibility:
+- **E + E + F** (2 peer endorsements + community signal) ≈ **C** (certification-level credibility)
+- **D + F** (assessment score + community reputation) ≈ **C**
+- **G alone** (self-reported only) = always remains **G** — no number of self-reports increases credibility
+- **S** (self-evident) always supersedes all other tiers — it cannot be questioned
+
+### How Credibility Affects the Resume
+
+In the Skills table Proof column, always include the verifier tier:
+
+```
+| Python | SFIA:PROG — Level 5 | Expert | [S] GitHub: 15 repos, 2K+ commits; [C] Certified by AWS (Developer Associate) |
+| Leadership | — | Advanced | [B] Verified by Acme Corp HR (EmploymentCredential VC); [E] Endorsed by Jane Doe, VP Engineering |
+| React | SFIA:PROG — Level 4 | Advanced | [S] GitHub: 8 repos; [F] Stack Overflow: top 5% tag; [D] HackerRank 95/100 |
+| Project Management | IPMA:ICB4 — C | Intermediate | [C] Certified by PMI (PMP); [G] Self-reported: led 5 projects |
+| Negotiation | — | Intermediate | [G] Self-reported (unverified) |
+```
+
+The tier label `[S]`, `[A]`, `[B]`, etc. immediately tells the reader how trustworthy each
+proof point is.
+
+---
+
+## Section 16 — Top Educational Institutions Directory
+
+A reference directory of globally recognized educational institutions organized by discipline.
+Used by the `linkedin-resume` skill to:
+1. **Assess credential weight** — degrees from top-tier institutions carry stronger signal
+2. **Guide verification** — identify which institutions offer digital/verifiable credentials
+3. **Enrich the Education section** — add institutional reputation context when relevant
+
+### How to use this directory
+
+When generating a resume:
+- If a person's degree is from a listed institution, the Education section MAY note the
+  institution's global standing (e.g., "IIT Bombay — India's premier engineering institute")
+  only if the user requests it or if the resume targets international audiences who may not
+  recognize the institution
+- When encouraging credential verification (Step 6), reference whether the institution
+  offers digital credentials
+- Never rank or compare institutions in the resume itself — simply present the degree factually
+
+### Institution Tier Definitions
+
+| Tier | Criteria |
+|---|---|
+| **Tier 1 — Global Elite** | Consistently ranked in top 10–20 globally across multiple ranking systems (QS, THE, ARWU, US News). Universally recognized by name. |
+| **Tier 2 — World-Class** | Ranked in top 50–100 globally. Widely recognized internationally in their domain. |
+| **Tier 3 — Nationally Premier** | Top institution(s) in their country for a specific discipline. May not be globally ranked but carry enormous weight domestically and regionally. |
+
+---
+
+### Technology & Engineering
+
+#### Tier 1 — Global Elite
+| Institution | Country | Known for | Digital credentials |
+|---|---|---|---|
+| **MIT** (Massachusetts Institute of Technology) | US | CS, AI, Engineering, Robotics | MIT Digital Diplomas (blockchain-based); MITx certificates via edX |
+| **Stanford University** | US | CS, AI, Entrepreneurship, Engineering | Stanford Online certificates; Coursera partnership |
+| **Caltech** (California Institute of Technology) | US | Engineering, Physics, Space Science | — |
+| **Carnegie Mellon University** | US | CS, AI, Robotics, HCI | CMU digital certificates |
+| **ETH Zurich** | Switzerland | Engineering, CS, Physics | ETH digital credentials |
+| **University of Cambridge** | UK | Engineering, CS, Mathematics | Cambridge digital verification |
+| **University of Oxford** | UK | CS, Engineering, Mathematics | Oxford digital certificates |
+| **Imperial College London** | UK | Engineering, CS, Data Science | Imperial digital credentials |
+| **NUS** (National University of Singapore) | Singapore | CS, Engineering, AI | NUS digital certificates via OpenCerts |
+| **Tsinghua University** | China | Engineering, CS, AI | — |
+
+#### Tier 2 — World-Class
+| Institution | Country | Known for | Digital credentials |
+|---|---|---|---|
+| **UC Berkeley** | US | CS, AI, EECS | Berkeley digital certificates |
+| **Georgia Tech** | US | CS, Engineering, Cybersecurity | GT digital badges via Credly |
+| **University of Toronto** | Canada | AI/ML (deep learning pioneer), CS | UofT certificates |
+| **TU Munich** | Germany | Engineering, CS, Automotive | — |
+| **EPFL** (Swiss Federal Institute of Technology) | Switzerland | Engineering, CS, Robotics | EPFL digital certificates via edX |
+| **University of Tokyo** | Japan | Engineering, Robotics, Materials | — |
+| **KAIST** | South Korea | Engineering, AI, Semiconductors | — |
+| **Technion** | Israel | Engineering, CS, Cybersecurity | — |
+| **University of Waterloo** | Canada | CS, Engineering, Co-op | — |
+| **TU Delft** | Netherlands | Engineering, Aerospace, Data Science | TU Delft certificates via edX |
+
+#### Tier 3 — Nationally Premier (India)
+| Institution | Country | Known for | Digital credentials |
+|---|---|---|---|
+| **IIT Bombay** | India | CS, Engineering, Entrepreneurship | IIT Bombay digital certificates via NPTEL/Swayam |
+| **IIT Delhi** | India | CS, Engineering, AI | NPTEL/Swayam certificates |
+| **IIT Madras** | India | CS, Data Science, Engineering | IIT Madras Online Degree (BS in Data Science); NPTEL |
+| **IIT Kanpur** | India | CS, Engineering, Mathematics | NPTEL certificates |
+| **IIT Kharagpur** | India | Engineering, CS, Management | NPTEL certificates |
+| **IIT Roorkee** | India | Civil, Engineering, CS | NPTEL certificates |
+| **IIT Hyderabad** | India | AI/ML, Engineering, Biomedical | NPTEL certificates |
+| **IIT Guwahati** | India | Engineering, Design, CS | NPTEL certificates |
+| **IIIT Hyderabad** | India | CS, AI, NLP, Data Science | — |
+| **BITS Pilani** | India | Engineering, CS, Pharmacy | BITS online degrees |
+| **NIT Trichy** | India | Engineering, CS | — |
+| **ISI Kolkata** (Indian Statistical Institute) | India | Statistics, Data Science, Mathematics | — |
+
+---
+
+### Business & Management
+
+#### Tier 1 — Global Elite
+| Institution | Country | Known for | Digital credentials |
+|---|---|---|---|
+| **Harvard Business School** | US | MBA, General Management, Leadership | HBS Online certificates; Harvard digital credentials |
+| **Stanford GSB** (Graduate School of Business) | US | MBA, Entrepreneurship, Innovation | Stanford Online certificates |
+| **Wharton** (University of Pennsylvania) | US | MBA, Finance, Analytics | Wharton Online certificates via Coursera |
+| **INSEAD** | France/Singapore | MBA, International Business | INSEAD certificates |
+| **London Business School** | UK | MBA, Finance, Strategy | LBS digital certificates |
+| **MIT Sloan** | US | MBA, Technology Management, Analytics | MIT Sloan Executive Education certificates |
+| **Columbia Business School** | US | MBA, Finance, Value Investing | Columbia digital certificates |
+| **Chicago Booth** | US | MBA, Finance, Economics | Booth digital certificates |
+| **Kellogg** (Northwestern) | US | MBA, Marketing, Management | Kellogg certificates |
+| **HEC Paris** | France | MBA, Strategy, Luxury Management | HEC certificates via Coursera |
+
+#### Tier 2 — World-Class
+| Institution | Country | Known for | Digital credentials |
+|---|---|---|---|
+| **Yale SOM** | US | MBA, Social Enterprise, Leadership | — |
+| **NYU Stern** | US | MBA, Finance, Fintech | — |
+| **Berkeley Haas** | US | MBA, Entrepreneurship, Social Impact | — |
+| **IE Business School** | Spain | MBA, Entrepreneurship, Digital | IE certificates |
+| **Cambridge Judge** | UK | MBA, Entrepreneurship | — |
+| **Oxford Said** | UK | MBA, Finance, Social Enterprise | — |
+| **NUS Business School** | Singapore | MBA, Asian Business | — |
+| **Melbourne Business School** | Australia | MBA, General Management | — |
+| **Rotman** (University of Toronto) | Canada | MBA, Finance, Design Thinking | — |
+| **CEIBS** (China Europe International Business School) | China | MBA, China Business | — |
+
+#### Tier 3 — Nationally Premier (India)
+| Institution | Country | Known for | Digital credentials |
+|---|---|---|---|
+| **IIM Ahmedabad** | India | MBA (PGDM), Strategy, Entrepreneurship | IIM-A executive education certificates |
+| **IIM Bangalore** | India | MBA (PGDM), Analytics, IT Management | IIM-B certificates via edX |
+| **IIM Calcutta** | India | MBA (PGDM), Finance, Economics | IIM-C certificates |
+| **IIM Lucknow** | India | MBA (PGDM), Operations, HR | — |
+| **IIM Kozhikode** | India | MBA (PGDM), Marketing, Finance | — |
+| **IIM Indore** | India | MBA (PGDM), HR, Marketing | — |
+| **ISB** (Indian School of Business) | India | MBA (PGP), Finance, Analytics, Entrepreneurship | ISB certificates via Coursera |
+| **XLRI Jamshedpur** | India | MBA, HR, Industrial Relations | — |
+| **FMS Delhi** | India | MBA, Finance, Marketing | — |
+| **SP Jain** (SPJIMR Mumbai) | India | MBA, General Management, Family Business | — |
+
+---
+
+### Computer Science & AI (Specialized)
+
+| Institution | Country | Known for | Digital credentials |
+|---|---|---|---|
+| **MIT CSAIL** | US | AI, Robotics, Systems, Theory | MITx certificates |
+| **Stanford AI Lab (SAIL)** | US | Deep Learning, NLP, Computer Vision | Stanford Online |
+| **CMU School of Computer Science** | US | ML, Robotics, HCI, Security | CMU certificates |
+| **UC Berkeley EECS** | US | AI, Systems, Theory | Berkeley certificates |
+| **University of Washington** | US | NLP, Systems, HCI | — |
+| **University of Montreal / Mila** | Canada | Deep Learning (Bengio), Reinforcement Learning | — |
+| **University of Toronto / Vector Institute** | Canada | Deep Learning (Hinton), ML | — |
+| **University of Edinburgh** | UK | NLP, AI, Informatics | Edinburgh certificates |
+| **Max Planck Institutes** | Germany | ML, Computer Vision, Robotics | — |
+| **IIT Bombay (CS Department)** | India | Systems, AI, Theory | NPTEL |
+| **IIT Delhi (CS Department)** | India | AI, Data Science, Networks | NPTEL |
+| **IIIT Hyderabad** | India | NLP, Computer Vision, AI | — |
+
+---
+
+### Finance & Economics
+
+| Institution | Country | Known for | Digital credentials |
+|---|---|---|---|
+| **Wharton** (UPenn) | US | Finance, Accounting, Real Estate | Wharton Online via Coursera |
+| **Chicago Booth** | US | Finance, Economics, Quantitative Methods | — |
+| **London School of Economics (LSE)** | UK | Economics, Finance, Public Policy | LSE Online certificates |
+| **MIT Sloan** | US | Financial Engineering, Fintech | MITx certificates |
+| **Columbia Business School** | US | Value Investing, Financial Economics | — |
+| **NYU Stern** | US | Finance, Fintech, Risk Management | — |
+| **London Business School** | UK | Finance, Private Equity | — |
+| **Bocconi University** | Italy | Finance, Economics, Management | Bocconi certificates via Coursera |
+| **IIM Ahmedabad** | India | Finance, Capital Markets | — |
+| **IIM Calcutta** | India | Finance, Economics | — |
+
+---
+
+### Data Science & Analytics
+
+| Institution | Country | Known for | Digital credentials |
+|---|---|---|---|
+| **MIT** | US | Data Science, Statistics, ML | MITx MicroMasters in Statistics & Data Science |
+| **Stanford** | US | ML, AI, Statistical Learning | Stanford Online certificates |
+| **CMU** | US | ML, Statistics, Computational Methods | CMU certificates |
+| **UC Berkeley** | US | Data Science, Statistics | Berkeley MicroMasters via edX |
+| **Harvard** | US | Biostatistics, Data Science | HarvardX certificates |
+| **University of Michigan** | US | Data Science, Applied Statistics | UMich certificates via Coursera |
+| **Imperial College London** | UK | Data Science, Machine Learning | Imperial certificates via Coursera |
+| **ETH Zurich** | Switzerland | Statistics, Data Science | — |
+| **ISI Kolkata** | India | Statistics, Data Science, Mathematics | — |
+| **IIT Madras** | India | Online BS in Data Science (pioneering) | IIT-M Online Degree credentials |
+| **IIM Bangalore** | India | Business Analytics | IIM-B certificates via edX |
+
+---
+
+### Design & Creative
+
+| Institution | Country | Known for | Digital credentials |
+|---|---|---|---|
+| **Rhode Island School of Design (RISD)** | US | Industrial Design, Graphic Design | — |
+| **Parsons School of Design** | US | Fashion, Digital Design | — |
+| **Royal College of Art** | UK | Design, Innovation | — |
+| **ArtCenter College of Design** | US | Product Design, Transportation Design | — |
+| **Aalto University** | Finland | Design, Architecture, Arts + Technology | — |
+| **MIT Media Lab** | US | Interaction Design, Creative Technology | — |
+| **IIT Bombay (IDC School of Design)** | India | Industrial Design, UX, Interaction Design | — |
+| **NID Ahmedabad** (National Institute of Design) | India | Product Design, Communication Design | — |
+| **Srishti Manipal** | India | Design, Art, Technology | — |
+| **Copenhagen Institute of Interaction Design (CIID)** | Denmark | Interaction Design, Service Design | — |
+
+---
+
+### Medicine & Healthcare
+
+| Institution | Country | Known for | Digital credentials |
+|---|---|---|---|
+| **Harvard Medical School** | US | Medicine, Biomedical Research | HarvardX health certificates |
+| **Johns Hopkins University** | US | Public Health, Medicine, Biomedical Engineering | JHU certificates via Coursera |
+| **Stanford Medicine** | US | Biomedical Informatics, AI in Healthcare | — |
+| **University of Oxford (Medical Sciences)** | UK | Clinical Medicine, Genomics | — |
+| **Karolinska Institute** | Sweden | Medicine, Biomedical Research (Nobel) | — |
+| **AIIMS Delhi** | India | Medicine, Medical Research | — |
+| **CMC Vellore** | India | Medicine, Community Health | — |
+| **JIPMER Puducherry** | India | Medicine, Research | — |
+| **University of Tokyo (Medicine)** | Japan | Medicine, Biomedical Engineering | — |
+| **NUS Yong Loo Lin School of Medicine** | Singapore | Medicine, Translational Research | — |
+
+---
+
+### Law
+
+| Institution | Country | Known for | Digital credentials |
+|---|---|---|---|
+| **Harvard Law School** | US | Corporate Law, Constitutional Law | HarvardX certificates |
+| **Yale Law School** | US | Constitutional Law, Public Interest | — |
+| **Stanford Law School** | US | Technology Law, IP, Entrepreneurship | — |
+| **University of Oxford (Law)** | UK | International Law, Jurisprudence | — |
+| **University of Cambridge (Law)** | UK | Commercial Law, International Law | — |
+| **Columbia Law School** | US | Corporate Law, International Law | — |
+| **NYU School of Law** | US | Tax Law, International Law | — |
+| **NLS Bangalore** (National Law School) | India | Constitutional Law, Corporate Law | — |
+| **NALSAR Hyderabad** | India | IP Law, International Law | — |
+| **NLU Delhi** | India | Corporate Law, Policy | — |
+
+---
+
+### Public Policy & Social Sciences
+
+| Institution | Country | Known for | Digital credentials |
+|---|---|---|---|
+| **Harvard Kennedy School** | US | Public Policy, Governance, Leadership | HKS Executive Education certificates |
+| **LSE** (London School of Economics) | UK | Economics, Political Science, Sociology | LSE Online certificates |
+| **Sciences Po** | France | Political Science, International Relations | Sciences Po certificates via Coursera |
+| **Princeton (Woodrow Wilson School)** | US | Public Policy, Economics | — |
+| **Georgetown SFS** | US | International Relations, Diplomacy | — |
+| **University of Chicago (Harris School)** | US | Public Policy, Data Analytics | — |
+| **TISS Mumbai** (Tata Institute of Social Sciences) | India | Social Work, Public Policy, HR | — |
+| **JNU** (Jawaharlal Nehru University) | India | Social Sciences, International Relations | — |
+| **Ashoka University** | India | Liberal Arts, Social Sciences, Economics | — |
+| **NUS Lee Kuan Yew School** | Singapore | Public Policy, Asian Governance | — |
+
+---
+
+### Online Education Platforms (Cross-Discipline)
+
+These platforms partner with top institutions to issue verifiable credentials at scale.
+
+| Platform | Credential type | Institutional partners | Verification |
+|---|---|---|---|
+| **Coursera** | Certificates, Professional Certificates, Degrees | Stanford, Wharton, Google, IBM, IIMs, ISB | Coursera verified certificates; shareable on LinkedIn |
+| **edX** | MicroMasters, Professional Certificates, Degrees | MIT, Harvard, Berkeley, IIM-B, TU Delft | edX verified certificates |
+| **Udacity** | Nanodegrees | Industry partners (Google, AWS, Mercedes) | Udacity certificates |
+| **NPTEL / Swayam** | Certificates, Online Degrees | IITs, IIMs, IISc, NITs (India) | NPTEL certificates with proctored exams |
+| **FutureLearn** | Certificates, Microcredentials, Degrees | King's College, Monash, Deakin | FutureLearn certificates |
+| **Simplilearn / UpGrad / Great Learning** | PG Programs, Certificates | IIT, IIIT, IIM partners (India) | Platform-issued certificates |
+| **LinkedIn Learning** | Certificates | LinkedIn in-house content | LinkedIn profile badges |
+| **Google Career Certificates** | Professional Certificates | Google | Credly badges |
+| **AWS Training & Certification** | Certifications | Amazon | Credly badges; AWS verification |
+| **Microsoft Learn** | Certifications | Microsoft | Credly badges; MS Learn verification |
+
+---
+
+### Using Institutional Data in Resumes
+
+**Rules:**
+1. **Never rank institutions** in the resume — present degrees factually
+2. **Add context for international audiences** only when requested:
+   - "IIT Bombay (India's premier engineering institute, <1% acceptance rate)"
+   - "IIM Ahmedabad (India's top-ranked business school)"
+3. **Credential verification guidance**: When encouraging VC verification in Step 6, check
+   if the institution offers digital credentials (marked in the tables above) and provide
+   specific instructions:
+   - "IIT Madras offers digital degree verification via NPTEL — check your alumni portal"
+   - "Harvard offers digital diplomas — visit Harvard's credential verification page"
+4. **Online credentials matter**: Courses and certificates from top platforms (Coursera/MIT,
+   edX/Harvard, NPTEL/IIT) carry real weight and should be included in the Education or
+   Certifications section, not dismissed as informal learning
 
 ---
 
