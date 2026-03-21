@@ -526,11 +526,195 @@ based on what's missing:
 Only show items that haven't already been provided. Skip the prompt entirely if the user
 has explicitly said they want a quick/simple resume or to proceed with what they have.
 
-### Step 5 — Present and Refine
+### Step 5 — Format for Target Platform
 
-- Present the resume to the user in Markdown format
+Before presenting the resume, ask the user **where they intend to publish or use it**.
+The output format, content emphasis, tone, and structure change significantly depending on
+the target platform.
+
+> "Where will you be using this resume? I'll optimize the format accordingly."
+>
+> - [ ] **LinkedIn** — Profile optimization
+> - [ ] **Job board** (Indeed, Glassdoor, Monster, Naukri, etc.)
+> - [ ] **ATS submission** (Applicant Tracking System — Workday, Greenhouse, Lever, etc.)
+> - [ ] **Company career page** (direct application)
+> - [ ] **PDF / Print** — Traditional resume document
+> - [ ] **Personal website / Portfolio**
+> - [ ] **GitHub README** (developer profile)
+> - [ ] **Behance / Dribbble** (design portfolio)
+> - [ ] **Credly / credential wallet** (skills-focused)
+> - [ ] **Email to recruiter**
+> - [ ] **Networking / conferences**
+> - [ ] **Internal promotion** (within current company)
+> - [ ] **Freelance platforms** (Upwork, Toptal, Fiverr)
+> - [ ] **Academic** (CV for faculty/research positions)
+> - [ ] **Government / public sector** application
+> - [ ] **Multiple platforms** (I need several versions)
+
+If the user skips this step or says "just a resume", default to **ATS-optimized Markdown**.
+
+#### Platform-Specific Output Formats
+
+##### LinkedIn Profile Optimization
+| Aspect | LinkedIn format |
+|---|---|
+| **Output type** | Section-by-section text blocks ready to paste into LinkedIn fields |
+| **Headline** | 120 chars max. Format: `[Title] | [Specialty] | [Key differentiator]` |
+| **About section** | 2,600 chars max. First-person voice. Hook in first 3 lines (visible before "see more"). Story-driven, not list-driven. |
+| **Experience** | Each role: title, company, date range, 3–5 bullet points. Use LinkedIn's character limits. Focus on impact and outcomes. |
+| **Skills** | Top 50 skills (LinkedIn allows 50). Order by endorsement potential. No framework codes — LinkedIn doesn't support them. |
+| **Education** | Institution, degree, field, dates, activities/societies |
+| **Featured section** | Suggest 3–5 items to feature: top articles, repos, certifications, presentations |
+| **Recommendations** | Draft 2–3 recommendation request templates the user can send to colleagues |
+| **Tone** | Conversational, first-person, achievement-oriented. Avoid jargon-heavy buzzwords. |
+| **Keywords** | Embed industry keywords naturally for LinkedIn search algorithm (recruiter search SEO) |
+| **What to omit** | Framework codes, credibility tiers, verification status table (not supported by LinkedIn) |
+
+##### Job Boards (Indeed, Glassdoor, Monster, Naukri)
+| Aspect | Job board format |
+|---|---|
+| **Output type** | Plain text or simple HTML (most job boards strip formatting) |
+| **Length** | 1–2 pages max. Concise. No tables or complex formatting. |
+| **Structure** | Contact → Summary → Skills (keyword list) → Experience → Education → Certifications |
+| **Skills** | Flat comma-separated keyword list (optimized for job board search matching) |
+| **Tone** | Professional, third-person or implied first-person. Action verbs. Quantified achievements. |
+| **Keywords** | Heavy keyword optimization — match common job posting language |
+| **What to omit** | Portfolio sections, framework codes, verification tiers, lengthy project descriptions |
+
+##### ATS (Applicant Tracking Systems — Workday, Greenhouse, Lever, Taleo)
+| Aspect | ATS format |
+|---|---|
+| **Output type** | Clean, single-column Markdown or plain text. NO tables, columns, headers with special characters, or graphics. |
+| **File format** | `.docx` (preferred by most ATS) or `.pdf` (if ATS supports it). Offer both. |
+| **Structure** | Contact → Summary → Experience → Education → Skills → Certifications. Strict reverse chronological. |
+| **Skills** | Keyword-dense section. Include both acronyms and full terms (`AWS (Amazon Web Services)`). Match job posting language exactly. |
+| **Formatting rules** | Standard section headers (`Experience`, `Education`, `Skills` — not creative alternatives). No text boxes, no columns, no images. Standard fonts. |
+| **Dates** | Use standard format: `Jan 2020 – Present` or `01/2020 – Present`. Avoid ambiguous formats. |
+| **Tone** | Achievement-focused. Start bullets with action verbs. Quantify where possible. |
+| **What to omit** | Framework codes, verification tiers, portfolio sections, GitHub stats. Keep it clean and parseable. |
+| **ATS test** | After generating, offer to check if the resume is ATS-friendly (no parsing-breaking elements) |
+
+##### PDF / Print (Traditional Resume)
+| Aspect | PDF format |
+|---|---|
+| **Output type** | Well-formatted Markdown (for PDF rendering) or LaTeX source |
+| **Layout** | Professional typography. Clear section dividers. Appropriate white space. 1–2 pages (3+ only for 15+ years experience). |
+| **Structure** | Full template with all earned sections. Include skills table with framework mapping and proof. |
+| **Skills** | Full skills table with Framework Mapping, Level, and Proof columns (the complete format) |
+| **Verification** | Include Credential Verification Status table |
+| **Tone** | Formal, professional, third-person implied |
+| **What to include** | Everything — this is the comprehensive version |
+
+##### Personal Website / Portfolio
+| Aspect | Website format |
+|---|---|
+| **Output type** | HTML-ready Markdown or structured JSON (for static site generators like Jekyll, Hugo, Gatsby) |
+| **Layout** | Sections designed for web layout: hero header, cards for experience, grid for skills, embedded links |
+| **Skills** | Visual skill bars or badges. Include framework codes as tooltips/metadata. Link to proof sources (GitHub, SO, etc.) |
+| **Portfolio sections** | Full platform portfolio sections with live links to repos, articles, packages, designs |
+| **Interactivity** | Suggest adding: filterable skills by category, expandable experience cards, live GitHub contribution graph embed |
+| **SEO** | Include JSON-LD structured data (`schema.org/Person`, `schema.org/Occupation`) for search engine visibility |
+| **Tone** | Personable, first-person, showcasing personality alongside credentials |
+
+##### GitHub README (Developer Profile)
+| Aspect | GitHub format |
+|---|---|
+| **Output type** | GitHub-flavored Markdown for `README.md` in a profile repository (`username/username`) |
+| **Layout** | Badges at top (tech stack, certifications), brief bio, pinned repos section, skills with shield.io badges, contribution stats |
+| **Skills** | Shield.io badge format: `![Python](https://img.shields.io/badge/Python-Expert-blue)` |
+| **Stats** | Include GitHub stats card embed: `github-readme-stats` |
+| **Tone** | Developer-friendly, concise, badge-heavy, link-rich |
+| **What to emphasize** | Open source contributions, tech stack, top repos, contribution streaks |
+| **What to omit** | Detailed work history (link to LinkedIn instead), formal education details |
+
+##### Behance / Dribbble (Design Portfolio)
+| Aspect | Design portfolio format |
+|---|---|
+| **Output type** | Project-centric narrative. Each project as a case study outline. |
+| **Structure** | Bio → Design philosophy → Featured projects (problem → process → outcome) → Skills → Tools |
+| **Skills** | Visual/design tool proficiency: Figma, Sketch, Adobe CC, prototyping, design systems |
+| **Tone** | Creative, visual-thinking, process-oriented |
+| **What to emphasize** | Design process, user impact, visual problem-solving, collaboration with engineering |
+
+##### Credly / Credential Wallet (Skills-Focused)
+| Aspect | Credential format |
+|---|---|
+| **Output type** | Skills-first format. Structured list of verified credentials and skill claims. |
+| **Structure** | Verified credentials (with proof links) → Skills table (framework-mapped) → Supporting experience |
+| **Skills** | Full framework-mapped table with credibility tiers. This IS the primary content. |
+| **Emphasis** | Verification status of every claim. Link every credential to its verification URL. |
+| **Tone** | Factual, evidence-based, minimal narrative |
+
+##### Email to Recruiter
+| Aspect | Email format |
+|---|---|
+| **Output type** | Email body text + attached resume (PDF). Generate both. |
+| **Email body** | 150–200 word cover note: who you are, what you're looking for, 2–3 key highlights, call to action |
+| **Attached resume** | ATS-optimized PDF (see ATS format above) |
+| **Tone** | Professional but warm. Not robotic. Show genuine interest. |
+| **Personalization** | If user specifies the company/role, tailor the email and resume keywords to match |
+
+##### Freelance Platforms (Upwork, Toptal, Fiverr)
+| Aspect | Freelance format |
+|---|---|
+| **Output type** | Platform-specific profile sections (title, overview, skills, portfolio items) |
+| **Title** | `[Specialty] | [Key tool/tech] | [Years] years experience` |
+| **Overview** | 500–1000 chars. Problem-solver framing: what client problems you solve. Social proof (stats, notable clients). |
+| **Skills** | Platform tag format. Match platform's skill taxonomy. |
+| **Portfolio** | 3–5 best projects framed as client outcomes |
+| **Hourly rate context** | Suggest positioning based on skill level and market rates (if user asks) |
+| **Tone** | Client-focused, outcome-oriented. "I help [audience] achieve [outcome] by [method]." |
+
+##### Academic CV (Faculty / Research)
+| Aspect | Academic CV format |
+|---|---|
+| **Output type** | Full academic CV (no page limit — can be 5–20+ pages) |
+| **Structure** | Contact → Education → Research Interests → Publications → Grants/Funding → Teaching → Conferences/Talks → Awards → Service → References |
+| **Publications** | Full citation format (APA/IEEE/ACM depending on field). Separate: journal articles, conference papers, book chapters, preprints, patents |
+| **Skills** | NOT a primary section. Academic CVs emphasize research output, not skills lists. Include technical competencies only in a brief "Technical Skills" subsection. |
+| **Tone** | Formal academic. Third person. Factual. |
+| **What to emphasize** | Publications, h-index, citations, grants won, students supervised, editorial board service |
+| **What to omit** | Skill framework mapping, verification tiers, portfolio sections (unless relevant to research) |
+
+##### Government / Public Sector Application
+| Aspect | Government format |
+|---|---|
+| **Output type** | Detailed, structured resume following government application standards |
+| **Structure** | Varies by country. For US federal: follow USAJOBS resume format. For UK: Civil Service competency framework. For India: UPSC/govt format. |
+| **Length** | Often 3–5+ pages (government resumes are typically longer than private sector) |
+| **Skills** | Map to the specific government competency framework if known. Include clearance level if applicable. |
+| **Experience** | Detailed: include hours/week, supervisor name (if required), salary grade, exact duties |
+| **Tone** | Formal, detailed, competency-aligned |
+| **Keywords** | Match the specific job announcement/vacancy language exactly |
+
+##### Internal Promotion (Within Current Company)
+| Aspect | Internal format |
+|---|---|
+| **Output type** | Achievement-focused document emphasizing growth and impact within the organization |
+| **Structure** | Current role impact → Key achievements → Skills growth → Cross-functional contributions → Career trajectory → Development goals |
+| **Skills** | Emphasize skills gained/grown during tenure. Show progression. Framework mapping useful here for career ladder alignment. |
+| **Tone** | Forward-looking, growth-oriented, aligned with company values/competency framework |
+| **What to emphasize** | Internal impact, revenue/efficiency gains, team building, culture contributions, cross-team work |
+| **What to omit** | External job history details (keep brief). Focus on current company tenure. |
+
+#### Multi-Platform Output
+
+If the user selects **multiple platforms**, generate each version separately with a clear
+label. Highlight the key differences between versions:
+
+> "I've generated 3 versions of your resume:
+> 1. **LinkedIn** — Optimized for profile sections, first-person voice, keyword-rich
+> 2. **ATS (PDF)** — Clean single-column, action verbs, keyword-matched to [target role]
+> 3. **GitHub README** — Badge-heavy, repo-focused, developer community style
+>
+> Key differences: [brief comparison of what's included/excluded in each]"
+
+### Step 5b — Present and Refine
+
+- Present the resume in the selected platform format
 - Offer to adjust formatting, add/remove sections, or regenerate with different emphasis
-- If the user wants to export, offer to save as a Markdown file
+- Offer to generate additional platform versions from the same data
+- If the user wants to export, offer to save in the appropriate file format
 
 ### Step 6 — Encourage Credential Verification
 
