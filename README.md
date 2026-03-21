@@ -17,6 +17,22 @@ Produces exhaustive, standardised profiles of SaaS products across 18 dimensions
 - Reads from and writes to the shared Notion feature registry
 - Covers: features, use cases, APIs, pricing, security, support, roadmap, analyst rankings, and more
 
+### `autonomyx-skill-evaluator`
+Evaluates professional skills from any source and generates a verified, framework-mapped resume.
+- Accepts any input: profile URLs (LinkedIn, GitHub, Docker Hub, Stack Overflow, npm, PyPI, etc.), Verifiable Credentials, chat/email exports, authored documents, patents, certifications
+- Evaluates each skill against profession-specific frameworks (SFIA, NICE, EDISON, PMI, CFA, SHRM, CIM, etc.) with proficiency levels and credibility-tiered proof ([S] self-evident through [G] self-reported)
+- Uses Explorium prospect matching and enrichment for professional background
+- Generates comprehensive skills table with framework mapping, behavioral + technical skills
+- Supports Verifiable Credentials (W3C, JWT, SD-JWT, Open Badges v3) with trust tiers
+- Encourages credential verification for unverified resume items
+
+### `skills-frameworks`
+Shared vocabulary of professional skills frameworks for standardized skill classification.
+- Maps 17+ professions to their respective competency frameworks (SFIA, NICE/NIST, EDISON, PMI, CFA, SHRM, CIM, UXPA, etc.)
+- Cross-framework level equivalence table (Beginner/Intermediate/Advanced/Expert across all frameworks)
+- Protocol for industries without a recognized framework (ask user, use universal levels as fallback)
+- Mandatory framework attribution for transparency
+
 ### `autonomyx-vocabulary`
 Shared vocabulary and taxonomy reference used by all Autonomyx skills.
 - Gartner Peer Insights → G2 category mapping (~120 markets)
@@ -51,6 +67,16 @@ saas-standardizer
   └── reads/writes → Notion (feature registry)
 
 autonomyx-vocabulary
+  └── standalone reference (no dependencies)
+
+autonomyx-skill-evaluator
+  └── reads → skills-frameworks (skill classification and framework mapping)
+  └── reads → Explorium (match-prospects, enrich-prospects)
+  └── reads → Platform APIs (GitHub, Docker Hub, Stack Overflow, npm, PyPI, Dev.to, etc.)
+  └── reads → WordPress MCP tools (optional)
+  └── reads → WebFetch (fallback for any platform)
+
+skills-frameworks
   └── standalone reference (no dependencies)
 ```
 
