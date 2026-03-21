@@ -1,38 +1,248 @@
 ---
 name: linkedin-resume
 description: >
-  Generates a polished, professional resume from a LinkedIn profile. Trigger this skill when a user
-  asks to create, build, or generate a resume from a LinkedIn profile URL, a person's name and
-  company, or a LinkedIn-sourced prospect. Uses the Explorium prospect matching and enrichment
-  tools to retrieve professional background data (work history, education, skills, demographics)
-  and formats the output as a structured, ATS-friendly resume in Markdown.
+  Generates a polished, professional resume from any online profile or account. Trigger this
+  skill when a user asks to create, build, or generate a resume from any profile URL (LinkedIn,
+  GitHub, Docker Hub, WordPress, Stack Overflow, Behance, Dribbble, Medium, Dev.to, npm, PyPI,
+  or any other platform), a person's name and company, or an email address. Uses platform-specific
+  APIs to extract identity and portfolio data, then uses Explorium prospect matching and enrichment
+  to retrieve professional background (work history, education, demographics). Formats the output
+  as a structured, ATS-friendly resume in Markdown with platform-specific portfolio sections.
 ---
 
-# LinkedIn Resume Generator
+# Resume Generator — Any Profile, Any Platform
 
-Creates a professional resume from LinkedIn profile data retrieved via Explorium prospect
-matching and enrichment.
+Creates a professional resume from any online profile, retrieved via platform-specific APIs
+and Explorium prospect matching/enrichment.
 
 ## When to Use
 
 Trigger this skill when the user:
-- Asks to create/build/generate a resume from a LinkedIn profile
-- Provides a LinkedIn URL and asks for a resume
+- Asks to create/build/generate a resume from any online profile (LinkedIn, GitHub, etc.)
+- Provides any profile URL and asks for a resume
 - Provides a person's name (and optionally company) and asks for a resume
-- Asks to convert LinkedIn data into resume format
+- Provides documents, chat exports, patents, or other content and asks for a resume
+- Asks to convert any profile or professional data into resume format
+- Asks to combine multiple sources into a resume
 
 ## Inputs
 
 The user must provide **at least one** of the following:
-- **LinkedIn profile URL** (e.g., `https://www.linkedin.com/in/johndoe`)
+
+**Identity sources (for prospect matching):**
+- **Any profile URL** from a supported or unsupported platform
 - **Full name + company name** (e.g., "John Doe at Acme Corp")
 - **Email address** of the person
+- **Multiple profile URLs** from different platforms (combined into one resume)
 
-If the input is ambiguous, ask the user to clarify before proceeding.
+**Supplementary sources (for enriching the resume):**
+- **Chat/message exports** — Slack archives, WhatsApp exports, Teams data, email `.mbox`/`.eml` files
+- **Authored documents** — whitepapers, research papers, blog posts, presentations, proposals, PRDs
+- **Patent numbers or inventor name** — for patent lookup
+- **Blog or personal website URL** — for publication extraction
+- **Certification URLs or badge links** — Credly, Google Cloud, AWS, Microsoft Learn
+- **Screenshots** of profiles, dashboards, or achievement pages from any platform
+
+The skill combines all provided sources into a single comprehensive resume. If the input
+is ambiguous, ask the user to clarify before proceeding.
+
+---
+
+## Supported Platforms
+
+### Tier 1 — Direct Prospect Match (richest data)
+These platforms are natively supported by Explorium `match-prospects`:
+
+| Platform | URL pattern | match-prospects field |
+|---|---|---|
+| **LinkedIn** | `linkedin.com/in/<username>` | `linkedin` (direct) |
+
+### Tier 2 — Public API Resolution (portfolio + identity)
+These platforms have public APIs to extract identity info and portfolio data:
+
+| Platform | URL pattern | API endpoint | Resume section |
+|---|---|---|---|
+| **GitHub** | `github.com/<user>` | `api.github.com/users/<user>` | Technical Profile |
+| **Docker Hub** | `hub.docker.com/u/<user>` | `hub.docker.com/v2/users/<user>` | Container & DevOps Profile |
+| **WordPress.com** | `<site>.wordpress.com` or profile URL | WP MCP tools | Publishing & Content Profile |
+| **npm** | `npmjs.com/~<user>` | `registry.npmjs.org/-/user/org.couchdb.user:<user>` | Open Source Packages |
+| **PyPI** | `pypi.org/user/<user>` | `pypi.org/user/<user>` (web) | Open Source Packages |
+| **Stack Overflow** | `stackoverflow.com/users/<id>/<name>` | `api.stackexchange.com/2.3/users/<id>` | Developer Community Profile |
+| **Dev.to** | `dev.to/<user>` | `dev.to/api/users/by_username?url=<user>` | Technical Writing Profile |
+| **Medium** | `medium.com/@<user>` | `medium.com/@<user>` (web) | Publishing & Content Profile |
+| **Behance** | `behance.net/<user>` | `behance.net/<user>` (web) | Design Portfolio |
+| **Dribbble** | `dribbble.com/<user>` | `dribbble.com/<user>` (web) | Design Portfolio |
+| **Kaggle** | `kaggle.com/<user>` | `kaggle.com/<user>` (web) | Data Science Profile |
+
+### Tier 3 — Chat & Messaging Platforms (skill inference from conversations)
+These platforms don't expose public profile APIs, but if the user provides exported chat logs,
+message archives, or grants access via MCP/API integrations, the skill can **infer professional
+skills, expertise areas, and communication style** from conversation content.
+
+| Platform | Input type | What can be inferred |
+|---|---|---|
+| **Slack** | Exported workspace data, channel archives, or MCP integration | Technical discussions, domain expertise, tools mentioned, leadership signals, collaboration patterns |
+| **WhatsApp** | Exported chat `.txt` files | Professional discussions, industry knowledge, client interactions |
+| **Microsoft Teams** | Exported chat/channel data | Technical expertise, project involvement, cross-functional skills |
+| **Discord** | Exported server data or public server profiles | Community involvement, technical support, domain expertise |
+| **Telegram** | Exported chat data | Professional discussions, technical knowledge |
+| **Email (Gmail, Outlook, etc.)** | Exported `.mbox`, `.eml`, or `.pst` files, or user-provided email excerpts | Professional correspondence, client relationships, project coordination, industry terminology, role scope |
+
+### Tier 3b — Documents Authored (skill inference from written work)
+If the user provides documents they have authored, the skill can infer expertise, writing
+ability, domain knowledge, and technical depth from the content.
+
+| Document type | What can be inferred |
+|---|---|
+| **Technical documents** (whitepapers, RFCs, architecture docs) | Technical depth, system design skills, domain expertise |
+| **Research papers / publications** | Academic expertise, research methodology, subject matter authority |
+| **Blog posts / articles** | Communication skills, thought leadership, domain knowledge |
+| **Presentations / slide decks** | Presentation skills, strategic thinking, audience awareness |
+| **Reports / analyses** | Analytical skills, data interpretation, business acumen |
+| **Code documentation / READMEs** | Technical writing, developer experience focus |
+| **Proposals / RFPs** | Business development, solution architecture, client management |
+| **Project plans / PRDs** | Project management, product thinking, requirements analysis |
+| **Patents** | Innovation, technical invention, R&D leadership |
+
+**Patent lookup:**
+If the user provides their name or a patent number, search for patents via:
+- Google Patents: `https://patents.google.com/?inventor=<name>` (WebFetch)
+- USPTO: `https://patft.uspto.gov/` (WebFetch)
+Extract: patent title, patent number, filing date, grant date, co-inventors, abstract.
+Build a **Patents** section in the resume.
+
+**Blog & publication lookup:**
+If the user provides a blog URL or personal website, fetch the site via WebFetch and extract:
+- Article titles, dates, and topics
+- Recurring themes and expertise areas
+- Authorship evidence
+
+**How document inference works:**
+1. Read the provided documents (PDF, DOCX, TXT, MD, or other supported formats)
+2. Analyze content for:
+   - **Subject matter expertise**: topics, technologies, methodologies discussed with authority
+   - **Writing quality**: clarity, structure, persuasiveness (useful for summary tone)
+   - **Technical depth**: complexity of concepts explained, tools and frameworks referenced
+   - **Role indicators**: authorship context (individual contributor vs. lead vs. executive perspective)
+   - **Publications list**: titles, dates, venues for a Publications section
+3. Build a **Publications & Authored Work** section if formal publications are found
+4. Merge inferred skills into the main Skills section (tagged as "inferred from authored work")
+
+**Important:** Clearly distinguish between verified credentials (from platform APIs) and
+inferred skills (from documents and chat). Use the label "(inferred)" next to skills
+derived from unstructured content.
+
+**How skill inference works:**
+1. Parse the provided chat export or connected message source
+2. Identify professional signals:
+   - **Technical skills**: programming languages, tools, frameworks, platforms mentioned in context
+   - **Domain expertise**: recurring topics, industry terminology, problem-solving patterns
+   - **Soft skills**: leadership language ("I'll handle", "let's coordinate"), mentoring patterns,
+     cross-team collaboration
+   - **Projects & deliverables**: references to specific projects, launches, milestones
+   - **Role indicators**: decision-making patterns, scope of responsibility
+3. Build a **Communication & Collaboration Profile** section for the resume
+4. Merge inferred skills into the main Skills section (tagged as "inferred from communications")
+
+**Important:** Always inform the user that skills inferred from chat data are contextual
+estimates, not verified credentials. Mark them distinctly in the resume.
+
+### Tier 4 — Platforms Without Public APIs (context derivation)
+For platforms that lack public APIs (Google, Microsoft, Amazon, ChatGPT, Claude, etc.),
+the skill can still derive useful context from:
+
+| Source | How to use |
+|---|---|
+| **User-provided activity exports** | Most platforms offer data export (Google Takeout, Microsoft account data, Amazon order history). If the user provides exported data files, parse them for professional signals. |
+| **User-provided screenshots** | Read screenshots of profile pages, dashboards, certifications, or activity feeds using the image reading capability. Extract text, achievements, and activity data. |
+| **User-described context** | Ask the user to describe their usage, certifications, or achievements on the platform. Incorporate their self-reported data (clearly marked as self-reported). |
+| **Certification URLs** | Many platforms issue verifiable certifications (Google Cloud certs, AWS certs, Microsoft certs, Azure certs). If the user provides a certification verification URL, fetch and validate it. |
+| **Public certification directories** | Some platforms have public cert verification pages (e.g., Credly badges, AWS Certification verification). If the user provides a badge URL, fetch it. |
+
+**Certification platforms with public verification:**
+- **Credly** (`credly.com/users/<user>`) — badges from AWS, Google, Microsoft, Cisco, etc.
+- **Acclaim/Credly badges** — direct badge URLs are publicly fetchable
+- **Google Cloud Skills Boost** (`cloudskillsboost.google/public_profiles/<id>`)
+- **Microsoft Learn** (`learn.microsoft.com/en-us/users/<user>`)
+- **AWS Certification** (verification requires cert number from user)
+
+### Tier 5 — Web Fetch Fallback (any other platform)
+Any other platform URL not covered above. The skill fetches the public page and attempts
+to extract:
+- Display name
+- Bio / about text
+- Company or organization
+- Email (if publicly visible)
+- Portfolio items or activity
+- Certification badges or achievements
 
 ---
 
 ## Workflow
+
+### Step 0 — Resolve External Profiles
+
+For each non-LinkedIn URL provided, resolve it to identity information and portfolio data.
+
+#### GitHub (`github.com/<username>`)
+1. Fetch `https://api.github.com/users/<username>` via WebFetch
+2. Extract: `name`, `email`, `company`, `bio`, `public_repos`, `followers`, `blog`
+3. Fetch `https://api.github.com/users/<username>/repos?sort=stars&per_page=5` for top repos
+4. Fetch `https://api.github.com/users/<username>/events/public` for recent activity & languages
+5. Store as **GitHub Portfolio** data
+
+#### Docker Hub (`hub.docker.com/u/<username>`)
+1. Fetch `https://hub.docker.com/v2/users/<username>` via WebFetch
+2. Fetch `https://hub.docker.com/v2/repositories/<username>/?page_size=5&ordering=-star_count`
+   for top images
+3. Extract: username, full name (if available), top images with pull counts and stars
+4. Store as **Docker Portfolio** data
+
+#### WordPress.com (site URL or profile)
+1. Use the WordPress MCP tools (`wpcom-mcp-user-profile`, `wpcom-mcp-user-sites`) if the user
+   is authenticated, OR fetch the public site via WebFetch
+2. Extract: display name, site URL, site description, recent posts, content themes
+3. Store as **WordPress Portfolio** data
+
+#### Stack Overflow (`stackoverflow.com/users/<id>/<name>`)
+1. Extract user ID from URL
+2. Fetch `https://api.stackexchange.com/2.3/users/<id>?site=stackoverflow` via WebFetch
+3. Extract: `display_name`, `reputation`, `badge_counts`, `about_me`, `website_url`, `location`
+4. Fetch `https://api.stackexchange.com/2.3/users/<id>/top-tags?site=stackoverflow&pagesize=10`
+   for expertise areas
+5. Store as **Stack Overflow Profile** data
+
+#### npm (`npmjs.com/~<username>`)
+1. Fetch `https://registry.npmjs.org/-/v1/search?text=maintainer:<username>&size=10` via WebFetch
+2. Extract: package names, descriptions, download counts
+3. Store as **npm Portfolio** data
+
+#### PyPI (`pypi.org/user/<username>`)
+1. Fetch `https://pypi.org/user/<username>/` via WebFetch
+2. Extract: list of maintained packages
+3. For top packages, fetch `https://pypi.org/pypi/<package>/json` for details
+4. Store as **PyPI Portfolio** data
+
+#### Dev.to (`dev.to/<username>`)
+1. Fetch `https://dev.to/api/users/by_username?url=<username>` via WebFetch
+2. Extract: `name`, `username`, `summary`, `github_username`, `website_url`, `joined_at`
+3. Fetch `https://dev.to/api/articles?username=<username>&per_page=5` for top articles
+4. Store as **Dev.to Portfolio** data
+
+#### Medium, Behance, Dribbble, Kaggle, or any other platform
+1. Fetch the public profile page via WebFetch
+2. Parse the page content to extract: display name, bio, location, portfolio items,
+   follower counts, or any other publicly visible information
+3. Store as **[Platform] Portfolio** data
+
+**Identity resolution priority (for prospect matching):**
+After resolving all profiles, combine extracted identifiers in this priority:
+1. `email` (most reliable for matching)
+2. `full_name` + `company_name` (good for matching)
+3. `full_name` alone (may produce multiple matches — will require user disambiguation)
+
+If no identifiers can be extracted from any provided profile, inform the user and ask for
+a LinkedIn URL, email, or full name + company.
 
 ### Step 1 — Match the Prospect
 
@@ -41,13 +251,21 @@ Use `match-prospects` to identify the person in Explorium's database.
 **Input mapping:**
 | User provides | match-prospects field |
 |---|---|
-| LinkedIn URL | `linkedin` |
+| LinkedIn URL | `linkedin` (direct) |
+| Other platform URL | Resolved via Step 0 → `full_name` + `company_name` and/or `email` |
 | Full name + company | `full_name` + `company_name` |
 | Email address | `email` |
 
-- If no match is found, inform the user and suggest they verify the spelling, provide
-  additional identifiers (company name, email), or try a different LinkedIn URL.
-- If multiple matches are returned, present them to the user and ask which person to use.
+**Matching strategy for non-LinkedIn inputs:**
+- Try the most specific identifiers first (email > name+company > name alone)
+- If `match-prospects` returns no results with name+company, retry with email if available
+- If multiple matches are returned, present them to the user and ask which person to use
+
+**If no match is found:**
+- If portfolio data was collected in Step 0, offer to generate a **portfolio-only resume**
+  using just the platform data (no Explorium enrichment). This resume will have portfolio
+  sections but limited work history.
+- Otherwise, inform the user and suggest they provide a LinkedIn URL or additional identifiers.
 
 ### Step 2 — Enrich the Prospect Profile
 
@@ -74,22 +292,74 @@ proceeding.
 
 ### Step 4 — Generate the Resume
 
-Using all retrieved data, generate a professional resume following the format in the
-**Resume Template** section below.
+Using all retrieved data (Explorium enrichment + platform portfolio data), generate a
+professional resume following the format in the **Resume Template** section below.
 
 **Data mapping rules:**
-- **Name**: Use the full name from the enriched profile
+- **Name**: Use the full name from the enriched profile (Explorium takes priority over platform data)
 - **Title**: Use the current job title; if unavailable, derive from most recent role
 - **Location**: Use city/state/country from the profile
 - **Contact**: Only include if Step 3 was performed and user requested it
+- **Profile Links**: Include all platform URLs the user provided in the header
 - **Summary**: Synthesize a 2–3 sentence professional summary from role history, seniority,
-  industry, and skills. Do NOT fabricate achievements or metrics not present in the data.
+  industry, and skills. If platform portfolio data is available, weave in relevant highlights
+  (e.g., "active open-source contributor with 50+ GitHub repos"). Do NOT fabricate achievements
+  or metrics not present in the data.
 - **Experience**: List all roles in reverse chronological order. Include company name, title,
   date range, and location where available.
 - **Education**: List degrees in reverse chronological order. Include institution, degree,
   field of study, and dates where available.
-- **Skills**: Extract from job titles, role descriptions, and industry context. Only include
-  skills that can be reasonably inferred from the data — do NOT invent skills.
+- **Skills**: Extract from job titles, role descriptions, industry context, AND platform data
+  (GitHub languages, Stack Overflow top tags, npm/PyPI package domains). Only include skills
+  with clear evidence.
+- **Platform Portfolio Sections**: Append platform-specific sections after Skills. Only include
+  sections for platforms where data was collected. See template below.
+
+### Step 4b — Prompt for Additional Sources
+
+Before generating the final resume, **proactively ask the user** if they can provide
+additional sources to strengthen the resume. Present a checklist of potential sources
+based on what's missing:
+
+> **To build the strongest possible resume, consider sharing any of these additional sources:**
+>
+> **Profile URLs** (the more, the better):
+> - [ ] LinkedIn profile
+> - [ ] GitHub profile
+> - [ ] Stack Overflow profile
+> - [ ] Docker Hub profile
+> - [ ] npm / PyPI author page
+> - [ ] Dev.to / Medium / blog URL
+> - [ ] Behance / Dribbble portfolio
+> - [ ] Kaggle profile
+> - [ ] Personal website or blog
+> - [ ] Any other professional profile
+>
+> **Documents & work samples:**
+> - [ ] Published papers, whitepapers, or articles
+> - [ ] Patent numbers (or name for patent search)
+> - [ ] Presentations or slide decks
+> - [ ] Technical documentation you've authored
+>
+> **Communications (for skill inference):**
+> - [ ] Slack workspace export
+> - [ ] Email archives (`.mbox` or sample emails)
+> - [ ] Chat exports (WhatsApp, Teams, Discord)
+>
+> **Certifications:**
+> - [ ] Credly badge URLs
+> - [ ] Cloud certification links (AWS, GCP, Azure)
+> - [ ] Any certification verification URLs
+>
+> **Other:**
+> - [ ] Screenshots of profiles or achievements
+> - [ ] Activity exports from any platform (Google Takeout, etc.)
+>
+> *You can skip any of these — I'll build the best resume possible with whatever you provide.
+> Just say "go ahead" to proceed with what we have, or share additional sources.*
+
+Only show items that haven't already been provided. Skip the prompt entirely if the user
+has explicitly said they want a quick/simple resume or to proceed with what they have.
 
 ### Step 5 — Present and Refine
 
@@ -105,15 +375,16 @@ Using all retrieved data, generate a professional resume following the format in
 # [FULL NAME]
 
 **[CURRENT TITLE]** | [LOCATION]
-[Email — only if enriched] | [Phone — only if enriched] | [LinkedIn URL — if provided]
+[Email — only if enriched] | [Phone — only if enriched]
+[LinkedIn URL] | [GitHub URL] | [Other platform URLs — as applicable]
 
 ---
 
 ## Professional Summary
 
-[2–3 sentences synthesized from career trajectory, industry, seniority level, and expertise
-areas. Ground every claim in the retrieved data. Never fabricate metrics, awards, or
-achievements.]
+[2–3 sentences synthesized from career trajectory, industry, seniority level, expertise areas,
+and platform highlights. Ground every claim in the retrieved data. Never fabricate metrics,
+awards, or achievements.]
 
 ---
 
@@ -143,41 +414,192 @@ points. If not available, omit bullets rather than fabricating content.]
 
 ## Skills
 
-[Comma-separated list of skills inferred from job titles, industries, and role context.
-Only include skills with clear evidence from the profile data.]
+[Comma-separated list of skills inferred from job titles, industries, role context, AND
+platform data (languages, tags, package domains). Only include skills with clear evidence.]
+
+---
+
+## Technical Profile — GitHub (only if GitHub data was collected)
+
+**GitHub:** [URL] | **Repositories:** [count] | **Followers:** [count]
+
+[Bio, if available]
+
+### Key Repositories
+- **[repo-name]** — [description] | [stars] stars
+- **[repo-name]** — [description] | [stars] stars
+[Top 3–5 by stars or recent activity]
+
+### Languages & Technologies
+[Comma-separated, extracted from repos and activity]
+
+---
+
+## Container & DevOps Profile — Docker Hub (only if Docker data was collected)
+
+**Docker Hub:** [URL]
+
+### Published Images
+- **[image-name]** — [description] | [pulls] pulls
+- **[image-name]** — [description] | [pulls] pulls
+[Top 3–5 by pull count]
+
+---
+
+## Developer Community — Stack Overflow (only if SO data was collected)
+
+**Stack Overflow:** [URL] | **Reputation:** [score] | **Badges:** [gold] gold, [silver] silver, [bronze] bronze
+
+### Top Expertise Areas
+[Comma-separated list of top tags by score]
+
+---
+
+## Open Source Packages — npm / PyPI (only if package data was collected)
+
+### npm Packages
+- **[package-name]** — [description] | [weekly downloads] downloads/week
+[Top packages by downloads]
+
+### PyPI Packages
+- **[package-name]** — [description] | [version]
+[Top packages]
+
+---
+
+## Technical Writing — Dev.to / Medium (only if writing data was collected)
+
+**[Platform]:** [URL]
+
+### Featured Articles
+- **[article title]** — [reactions/claps count] | [published date]
+- **[article title]** — [reactions/claps count] | [published date]
+[Top 3–5 articles by engagement]
+
+---
+
+## Design Portfolio — Behance / Dribbble (only if design data was collected)
+
+**[Platform]:** [URL]
+
+### Featured Projects
+- **[project name]** — [description] | [views/likes]
+[Top 3–5 projects by engagement]
+
+---
+
+## Publishing & Content — WordPress (only if WordPress data was collected)
+
+**Site:** [URL]
+
+### Recent Publications
+- **[post title]** — [published date]
+- **[post title]** — [published date]
+[Top 3–5 recent posts]
+
+---
+
+## Data Science — Kaggle (only if Kaggle data was collected)
+
+**Kaggle:** [URL]
+
+### Competitions & Notebooks
+- **[competition/notebook name]** — [ranking/votes]
+[Top entries by engagement]
+
+---
+
+## Publications & Authored Work (only if documents were provided)
+
+### Published Work
+- **[document/paper title]** — [type: whitepaper/article/paper] | [date if known]
+- **[document/paper title]** — [type] | [date if known]
+[List authored documents, ordered by relevance or date]
+
+### Expertise Areas (from authored work)
+[Comma-separated list of subject matter areas demonstrated in the documents,
+tagged as "(inferred from authored work)"]
+
+---
+
+## Communication & Collaboration Profile (only if chat/email data was provided)
+
+### Professional Communication
+- **Platforms analyzed:** [Slack, Email, Teams, etc.]
+- **Key discussion domains:** [comma-separated topics frequently discussed]
+- **Collaboration patterns:** [e.g., cross-functional coordination, technical mentoring,
+  client-facing communication]
+
+### Inferred Skills (from communications)
+[Comma-separated list of skills identified from chat/email content,
+tagged as "(inferred from communications)"]
+
+---
+
+## Patents (only if patent data was collected)
+
+- **[Patent Title]** — US Patent [Number] | Filed: [Date] | Granted: [Date]
+  Co-inventors: [names if available]
+- **[Patent Title]** — US Patent [Number] | Filed: [Date] | Granted: [Date]
+[List all patents found]
+
+---
+
+## Certifications (only if certification data was collected)
+
+- **[Certification Name]** — [Issuing Organization] | [Date] | [Verification URL if available]
+- **[Certification Name]** — [Issuing Organization] | [Date]
+[List all verified certifications]
 ```
+
+**Note:** Only include the platform-specific sections for which data was actually collected.
+Omit all others entirely.
 
 ---
 
 ## Important Rules
 
-1. **Never fabricate data.** If a field is not available from the enrichment, omit it entirely.
-   Do not guess job responsibilities, achievements, metrics, or skills that are not supported
-   by the retrieved data.
+1. **Never fabricate data.** If a field is not available from the enrichment or platform API,
+   omit it entirely. Do not guess job responsibilities, achievements, metrics, or skills that
+   are not supported by the retrieved data.
 
 2. **Respect credit costs.** Profile enrichment and contact enrichment consume credits. Always
    show the cost estimate to the user and wait for confirmation before running enrichments.
 
 3. **Privacy awareness.** Resumes contain personal information. Remind the user that the
-   generated resume is based on publicly available LinkedIn data and should be used
-   responsibly and in compliance with applicable privacy regulations.
+   generated resume is based on publicly available profile data and should be used responsibly
+   and in compliance with applicable privacy regulations.
 
 4. **Date formatting.** Use "MMM YYYY" format (e.g., "Jan 2020") for dates. If only a year
    is available, use the year alone. If no dates are available for a role, use "Dates not
    available."
 
 5. **Presentation order.** Always present sections in this order: Header, Summary, Experience,
-   Education, Skills. If a section has no data, omit it entirely rather than showing an empty
-   section.
+   Education, Skills, Platform Portfolios (GitHub, Docker, SO, npm/PyPI, Dev.to/Medium,
+   Behance/Dribbble, WordPress, Kaggle), Publications & Authored Work, Communication &
+   Collaboration Profile, Patents, Certifications. If a section has no data, omit it entirely
+   rather than showing an empty section.
 
-6. **Multiple profiles.** If the user asks to generate resumes for multiple people, process
-   them sequentially. Confirm each enrichment cost separately.
+6. **Multiple profiles.** If the user provides multiple platform URLs for the **same person**,
+   combine all portfolio data into a single resume. If the user asks for resumes for
+   **different people**, process them sequentially and confirm each enrichment cost separately.
 
-7. **Refinement.** After presenting the resume, proactively offer:
+7. **Multiple platform URLs.** When the user provides URLs from several platforms:
+   - Use the LinkedIn URL (if present) as the primary identifier for `match-prospects`
+   - Use other platform URLs for portfolio sections
+   - Cross-reference names across platforms to confirm they belong to the same person
+   - If names don't match across platforms, alert the user before proceeding
+
+8. **Refinement.** After presenting the resume, proactively offer:
    - Adjusting the professional summary tone (e.g., more technical, more executive)
-   - Reordering or emphasizing certain roles
+   - Reordering or emphasizing certain roles or portfolio sections
    - Adding a specific skills section focus
+   - Removing platform sections the user doesn't want
    - Saving the resume to a file
+
+9. **Unsupported platforms.** If the user provides a URL from a platform not listed in
+   Tier 2, attempt a Tier 3 (WebFetch) resolution. If the page is not publicly accessible
+   or returns no useful data, inform the user and suggest alternative platforms.
 
 ---
 
@@ -185,15 +607,22 @@ Only include skills with clear evidence from the profile data.]
 
 | Scenario | Action |
 |---|---|
-| No match found | Ask user to verify input; suggest adding company name or email |
+| No match found (with portfolio data) | Offer portfolio-only resume; suggest LinkedIn URL for full resume |
+| No match found (no portfolio data) | Ask user to verify input; suggest LinkedIn URL, email, or name+company |
 | Multiple matches | Present options with name, title, and company; ask user to pick |
 | Enrichment returns sparse data | Generate resume with available data; note which sections are incomplete |
 | Enrichment cost too high | Show cost estimate; suggest matching only (free) for basic info |
-| LinkedIn URL is malformed | Ask user to verify the URL format |
+| URL is malformed | Ask user to verify the URL format |
+| Platform API rate limited | Inform user; skip that platform's portfolio section; proceed with others |
+| Platform page not publicly accessible | Inform user; suggest alternative profile URL or platform |
+| Profile has no name or email | Ask user for additional identifiers (LinkedIn, email, name) |
+| Names don't match across platforms | Alert user; ask to confirm the profiles belong to the same person |
 
 ---
 
-## Example Interaction
+## Example Interactions
+
+### Example 1 — LinkedIn URL
 
 **User:** Create a resume from https://www.linkedin.com/in/janedoe
 
@@ -203,6 +632,47 @@ Only include skills with clear evidence from the profile data.]
 3. Show cost estimate → user confirms
 4. Receive enriched data (name, 3 roles, 1 education entry, location)
 5. Generate and present resume in Markdown format
+6. Offer refinements
+
+### Example 2 — GitHub URL
+
+**User:** Build a resume from https://github.com/jdoe
+
+**Skill workflow:**
+1. Fetch `https://api.github.com/users/jdoe` → name ("Jane Doe"), email, company ("Acme"),
+   bio, 42 repos, 150 followers
+2. Fetch `https://api.github.com/users/jdoe/repos?sort=stars&per_page=5` → top repos
+3. Call `match-prospects` with `full_name: "Jane Doe"` + `company_name: "Acme"`
+4. Match found → call `enrich-prospects` with `["enrich-prospects-profiles"]`
+5. Show cost estimate → user confirms
+6. Generate resume with standard sections + Technical Profile (GitHub) section
+7. Offer refinements
+
+### Example 3 — Multiple Platforms
+
+**User:** Create a resume using https://www.linkedin.com/in/janedoe and https://github.com/jdoe
+and https://stackoverflow.com/users/12345/jdoe
+
+**Skill workflow:**
+1. Resolve GitHub: fetch API → extract repos, languages, bio
+2. Resolve Stack Overflow: fetch API → extract reputation, badges, top tags
+3. Match via LinkedIn (primary): `match-prospects` with `linkedin` URL
+4. Enrich → show cost → user confirms
+5. Generate resume with: Experience, Education, Skills + GitHub section + Stack Overflow section
+6. Offer refinements
+
+### Example 4 — Non-LinkedIn, No Match
+
+**User:** Build a resume from https://github.com/newdev123
+
+**Skill workflow:**
+1. Fetch GitHub API → name ("Alex Dev"), no email, no company, bio, 12 repos
+2. Call `match-prospects` with `full_name: "Alex Dev"` → no match
+3. Offer: "I couldn't find a professional profile match. I can generate a portfolio-based
+   resume from your GitHub data, or you can provide a LinkedIn URL or email for a fuller resume."
+4. User says "go with GitHub only"
+5. Generate portfolio-only resume with: name, bio as summary, GitHub Technical Profile section,
+   Skills from repo languages
 6. Offer refinements
 
 ---

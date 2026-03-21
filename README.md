@@ -18,10 +18,12 @@ Produces exhaustive, standardised profiles of SaaS products across 18 dimensions
 - Covers: features, use cases, APIs, pricing, security, support, roadmap, analyst rankings, and more
 
 ### `linkedin-resume`
-Generates a polished, ATS-friendly resume from a LinkedIn profile.
-- Accepts LinkedIn URL, name + company, or email as input
-- Uses Explorium prospect matching and profile enrichment
-- Outputs a structured Markdown resume (summary, experience, education, skills)
+Generates a polished, ATS-friendly resume from any online profile or account.
+- Accepts URLs from any platform: LinkedIn, GitHub, Docker Hub, Stack Overflow, npm, PyPI, Dev.to, Medium, Behance, Dribbble, Kaggle, WordPress, and more
+- Resolves non-LinkedIn profiles via platform APIs or web fetching to extract identity and portfolio data
+- Uses Explorium prospect matching and enrichment for professional background (work history, education)
+- Generates platform-specific portfolio sections (repos, packages, articles, designs, images)
+- Falls back to portfolio-only resume when no Explorium match is found
 - Optional contact enrichment (email/phone) with cost confirmation
 
 ### `autonomyx-vocabulary`
@@ -62,6 +64,9 @@ autonomyx-vocabulary
 
 linkedin-resume
   └── reads → Explorium (match-prospects, enrich-prospects)
+  └── reads → Platform APIs (GitHub, Docker Hub, Stack Overflow, npm, PyPI, Dev.to, etc.)
+  └── reads → WordPress MCP tools (optional)
+  └── reads → WebFetch (fallback for any platform)
 ```
 
 ## Feature Status Badges
