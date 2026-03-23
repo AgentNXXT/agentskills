@@ -16,6 +16,7 @@
 #   odoo.agnxxt.com        — Odoo ERP/CRM
 #   n8n.agnxxt.com         — Workflow Automation
 #   wuzapi.agnxxt.com      — WhatsApp API
+#   matrix.agnxxt.com      — Matrix Homeserver (Conduit)
 
 name: openatonomyx
 
@@ -29,6 +30,7 @@ services:
       - "80:80"
       - "443:443"
       - "443:443/udp"
+      - "8448:8448"
     volumes:
       - ./caddy/Caddyfile:/etc/caddy/Caddyfile:ro
       - caddy-data:/data
@@ -186,6 +188,13 @@ services:
       service: wuzapi-db
     networks: [openatonomyx]
 
+  # ─── Matrix Homeserver ───────────────────────────────────────
+  conduit:
+    extends:
+      file: conduit/docker-compose.yml
+      service: conduit
+    networks: [openatonomyx]
+
 networks:
   openatonomyx:
     driver: bridge
@@ -206,3 +215,4 @@ volumes:
   n8n-data:
   n8n-db-data:
   wuzapi-db-data:
+  conduit-data:

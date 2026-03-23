@@ -45,3 +45,8 @@ n8n.agnxxt.com {
 wuzapi.agnxxt.com {
 	reverse_proxy wuzapi:8080
 }
+
+# Conduit — Matrix Homeserver (clients on 443, federation on 8448)
+matrix.agnxxt.com matrix.agnxxt.com:8448 {
+	reverse_proxy conduit:6167
+}
