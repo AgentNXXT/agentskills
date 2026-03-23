@@ -50,3 +50,13 @@ wuzapi.agnxxt.com {
 matrix.agnxxt.com matrix.agnxxt.com:8448 {
 	reverse_proxy conduit:6167
 }
+
+# Sim Studio — AI Workflow Builder
+sim.agnxxt.com {
+	reverse_proxy simstudio:3000
+}
+
+# Sim Studio — WebSocket (realtime collaboration)
+sim-ws.agnxxt.com {
+	reverse_proxy simstudio-realtime:3002
+}

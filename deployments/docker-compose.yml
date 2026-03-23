@@ -17,6 +17,8 @@
 #   n8n.agnxxt.com         — Workflow Automation
 #   wuzapi.agnxxt.com      — WhatsApp API
 #   matrix.agnxxt.com      — Matrix Homeserver (Conduit)
+#   sim.agnxxt.com         — Sim Studio (AI Workflows)
+#   sim-ws.agnxxt.com      — Sim Studio WebSocket
 
 name: openatonomyx
 
@@ -195,6 +197,31 @@ services:
       service: conduit
     networks: [openatonomyx]
 
+  # ─── AI Workflow Builder ────────────────────────────────────
+  simstudio:
+    extends:
+      file: simstudio/docker-compose.yml
+      service: simstudio
+    networks: [openatonomyx]
+
+  simstudio-realtime:
+    extends:
+      file: simstudio/docker-compose.yml
+      service: simstudio-realtime
+    networks: [openatonomyx]
+
+  simstudio-migrations:
+    extends:
+      file: simstudio/docker-compose.yml
+      service: simstudio-migrations
+    networks: [openatonomyx]
+
+  simstudio-db:
+    extends:
+      file: simstudio/docker-compose.yml
+      service: simstudio-db
+    networks: [openatonomyx]
+
 networks:
   openatonomyx:
     driver: bridge
@@ -216,3 +243,4 @@ volumes:
   n8n-db-data:
   wuzapi-db-data:
   conduit-data:
+  simstudio-db-data:
