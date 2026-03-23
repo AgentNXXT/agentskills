@@ -23,6 +23,12 @@ services:
       - "6167"
     volumes:
       - conduit-data:/var/lib/conduwuit
+    healthcheck:
+      test: ["CMD-SHELL", "wget --spider --quiet http://127.0.0.1:6167/_matrix/client/versions || exit 1"]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+      start_period: 15s
     networks: [default]
 
 volumes:

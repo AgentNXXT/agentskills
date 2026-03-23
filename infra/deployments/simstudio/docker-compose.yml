@@ -22,6 +22,11 @@ services:
       REDIS_URL: ${SIMSTUDIO_REDIS_URL:-}
       COPILOT_API_KEY: ${SIMSTUDIO_COPILOT_API_KEY:-}
       OLLAMA_URL: ${SIMSTUDIO_OLLAMA_URL:-http://host.docker.internal:11434}
+      # OIDC / Logto SSO — BetterAuth generic OIDC provider
+      AUTH_OIDC_ENABLED: "true"
+      AUTH_OIDC_CLIENT_ID: ${SIMSTUDIO_OIDC_CLIENT_ID:-}
+      AUTH_OIDC_CLIENT_SECRET: ${SIMSTUDIO_OIDC_CLIENT_SECRET:-}
+      AUTH_OIDC_ISSUER: ${LOGTO_ENDPOINT:-http://logto:3001}/oidc
       SOCKET_SERVER_URL: http://simstudio-realtime:3002
       NEXT_PUBLIC_SOCKET_URL: ${SIMSTUDIO_SOCKET_URL:-https://sim-ws.agnxxt.com}
     expose:

@@ -1,2 +1,11 @@
-deployments/.env
-deployments/openautonomyx-com/.env
+# Secrets
+infra/deployments/.env
+infra/deployments/openautonomyx-com/.env
+
+# Node
+node_modules/
+.npm
+
+# OS
+.DS_Store
+Thumbs.db

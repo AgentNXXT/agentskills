@@ -231,6 +231,7 @@ volumes:
   caddy-config:
   logto-db-data:
   liferay-data:
+  liferay-osgi:
   liferay-db-data:
   liferay-es-data:
   lago-db-data:
@@ -238,6 +239,7 @@ volumes:
   erpnext-data:
   erpnext-db-data:
   odoo-data:
+  odoo-addons:
   odoo-db-data:
   n8n-data:
   n8n-db-data:

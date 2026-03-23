@@ -1,0 +1,20 @@
+{
+  "name": "agentskills",
+  "private": true,
+  "description": "OpenAutonomyX — Claude Skills & Infrastructure Monorepo",
+  "version": "1.0.0",
+  "workspaces": [
+    "skills/*",
+    "infra/*"
+  ],
+  "scripts": {
+    "build:skills": "node scripts/build-skills.js",
+    "deploy:agnxxt": "cd infra/deployments && ./deploy.sh",
+    "deploy:openautonomyx": "cd infra/openautonomyx-com && ./deploy.sh",
+    "lint": "node scripts/lint-skills.js",
+    "validate": "docker compose -f infra/deployments/docker-compose.yml config --quiet"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
