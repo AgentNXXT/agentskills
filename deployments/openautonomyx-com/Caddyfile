@@ -1,8 +1,8 @@
-# WuzAPI — HTTPS reverse proxy for www.openautonomyx.com
+# Liferay — HTTPS reverse proxy for www.openautonomyx.com
 # Automatic TLS via Let's Encrypt
 
 www.openautonomyx.com {
-	reverse_proxy wuzapi:8080
+	reverse_proxy liferay:8080
 }
 
 # Redirect bare domain to www

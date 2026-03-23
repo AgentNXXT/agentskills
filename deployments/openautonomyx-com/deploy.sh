@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# WuzAPI — Deploy to www.openautonomyx.com
+# Liferay — Deploy to www.openautonomyx.com
 # Prerequisites: Docker, Docker Compose v2, DNS A records for openautonomyx.com + www
 set -euo pipefail
 
@@ -17,7 +17,7 @@ if [ ! -f .env ]; then
 fi
 
 echo "═══════════════════════════════════════════════════"
-echo "  WuzAPI — Deploying to www.openautonomyx.com"
+echo "  Liferay — Deploying to www.openautonomyx.com"
 echo "═══════════════════════════════════════════════════"
 echo ""
 
@@ -30,15 +30,16 @@ echo "→ Starting services..."
 docker compose up -d
 echo ""
 
+echo "→ Waiting for Liferay to become healthy (may take 2-3 min)..."
+timeout 180 bash -c 'until docker inspect --format="{{.State.Health.Status}}" oax-liferay 2>/dev/null | grep -q healthy; do sleep 10; echo "  waiting..."; done' || {
+  echo "⚠  Liferay not healthy in 180s — check: docker compose logs liferay"
+}
+echo "✅ Liferay is healthy"
+
+echo ""
 echo "═══════════════════════════════════════════════════"
 echo "  Deployment complete!"
 echo "═══════════════════════════════════════════════════"
 echo ""
-echo "  📱 WuzAPI → https://www.openautonomyx.com"
-echo ""
-echo "  API auth header:"
-echo "    Authorization: Bearer <WUZAPI_ADMIN_TOKEN>"
-echo ""
-echo "  Quick test:"
-echo "    curl https://www.openautonomyx.com/api/sessions -H 'token: <WUZAPI_ADMIN_TOKEN>'"
+echo "  🌐 Liferay Portal → https://www.openautonomyx.com"
 echo ""
